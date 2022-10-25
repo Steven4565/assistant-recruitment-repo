@@ -1,0 +1,18 @@
+{
+	"files.associations": {
+		"utils.h": "c",
+		"inputs.h": "c",
+		"stdio.h": "c",
+		"mainmenu.h": "c",
+		"view.h": "c",
+		"string.h": "c",
+		"config.h": "c",
+		"database.h": "c",
+		"stdbool.h": "c",
+		"database_struct.h": "c",
+		"malloc.h": "c",
+		"delete.h": "c",
+		"insert.h": "c",
+		"ctype.h": "c"
+	},
+}
