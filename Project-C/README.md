@@ -1,0 +1,1 @@
+Install ncurses first
