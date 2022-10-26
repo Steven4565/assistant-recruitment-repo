@@ -8,6 +8,7 @@
 		"events.h": "c",
 		"stdio.h": "c",
 		"printutils.h": "c",
-		"config.h": "c"
+		"config.h": "c",
+		"inpututils.h": "c"
 	}
 }

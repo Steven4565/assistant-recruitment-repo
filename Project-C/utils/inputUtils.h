@@ -21,7 +21,7 @@ char getKbdInput()
 	ret vals:
 		-1: enter
 		-2: other char
-	else: index value after moved
+		else: index value after moved
  */
 int getMenuScrollInput(char input, int *index, int min, int max)
 {

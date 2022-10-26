@@ -18,4 +18,13 @@ void printString(char *str)
 	printf("%s", str);
 }
 
+void printMenu(int selection, char **strArr, int arrLength)
+{
+	for (int i = 0; i < arrLength; i++)
+	{
+		printf("%s\t%c\n", strArr[i], (selection == i ? '<' : ' '));
+	}
+	printf("Exit\t\t%c\n", (selection == arrLength ? '<' : ' '));
+}
+
 #endif

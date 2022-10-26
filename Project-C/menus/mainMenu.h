@@ -5,16 +5,7 @@
 #include <conio.h>
 #include "../utils/inputUtils.h"
 #include "../utils/printUtils.h"
-
-void printMenu(int selection)
-{
-	clrscr();
-	printf("NEW GAME\t%c\n", (selection == 0 ? '<' : ' '));
-	printf("LOAD GAME\t%c\n", (selection == 1 ? '<' : ' '));
-	printf("CONTROLS\t%c\n", (selection == 2 ? '<' : ' '));
-	printf("HOW TO PLAY\t%c\n", (selection == 3 ? '<' : ' '));
-	printf("EXIT\t\t%c\n", (selection == 4 ? '<' : ' '));
-}
+#include "newGame.h"
 
 void printControls()
 {
@@ -74,11 +65,9 @@ void handleMenuLoopInput(int index, bool *runMenu)
 		getLine(name);
 		// TODO: input to database
 		// TODO: start lobby
-		puts("Press enter to continue");
-		getch();
 		break;
 	case 1:
-		// TODO: start loadGameLoop()
+		newGameLoop();
 		break;
 	case 2:
 		printControls();
@@ -89,7 +78,7 @@ void handleMenuLoopInput(int index, bool *runMenu)
 	case 4:
 		*runMenu = false;
 		clrscr();
-		puts("Exitting...");
+		puts("Exited program\nPress any key to continue...\n");
 		getch();
 		break;
 	}
@@ -99,11 +88,13 @@ void menuLoop()
 {
 	bool runMenu = true;
 	int index = 0;
-	printMenu(index);
+	char *options[] = {"NEW GAME", "LOAD GAME", "CONTROLS", "HOW TO PLAY"};
+	printMenu(index, options, 4);
+
 	while (runMenu)
 	{
 		clrscr();
-		printMenu(index);
+		printMenu(index, options, 4);
 		char input = getch();
 		if (getMenuScrollInput(input, &index, 0, 4) == -1)
 		{
