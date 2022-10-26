@@ -8,4 +8,9 @@ void clrscr()
 	printf("\e[1;1H\e[2J");
 }
 
+void printInt(char *str, int value)
+{
+	printf("%s: %d\n", str, value);
+}
+
 #endif

@@ -14,12 +14,17 @@
 #include "events/events.h"
 #include "events/handlers/enemyHandler.h"
 
+#include "menus/mainMenu.h"
+
 #include "globals.c"
 #include "globals.h"
 
-bool endGame = false;
+// PROTOTYPES
 
-void startEventLoop(void (*mainLoop)())
+void render();
+
+bool endGame = false;
+void startEventLoop(void (*gameLoop)())
 {
 	Timer frame = {clock(), 20, 0};
 	Timer enemy = {clock(), 4000, 0};
@@ -29,13 +34,28 @@ void startEventLoop(void (*mainLoop)())
 		getTimerInterval(&enemy);
 
 		// MAIN LOOP
-		runEvent(&frame, mainLoop);
+		runEvent(&frame, gameLoop);
 
 		// EMIT EVENTS
 		emitEvent(&enemy, &(events.onEnemyEmitted));
 
 		// TODO: optimize delay with usleep
 	}
+}
+
+void gameLoop()
+{
+	// clear screen
+	clrscr();
+
+	// get input
+	char input = getKbdInput();
+
+	// handle events
+	handleEnemy();
+
+	// render
+	render(currentStage);
 }
 
 void render()
@@ -51,22 +71,8 @@ void render()
 	}
 }
 
-void mainLoop()
-{
-	// clear screen
-	clrscr();
-
-	// get input
-	char input = getKbdInput();
-
-	// handle events
-	handleEnemy();
-
-	// render
-	render(currentStage);
-}
-
 int main()
 {
-	// startEventLoop(&mainLoop); // this is for starting the main event
+	menuLoop();
+	// startEventLoop(&gameLoop); // this is for starting the main event
 }
