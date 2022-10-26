@@ -11,6 +11,20 @@ typedef struct Timer
 	int msec;
 } Timer;
 
+void getTimerInterval(Timer *timer)
+{
+	timer->msec = (clock() - timer->before) * 1000 / CLOCKS_PER_SEC;
+}
+
+void runEvent(Timer *timer, void (*fn)())
+{
+	if (timer->msec >= timer->delay)
+	{
+		timer->before = clock();
+		fn();
+	}
+}
+
 void emitEvent(Timer *timer, bool *onEventEmitted)
 {
 	if (timer->msec >= timer->delay)

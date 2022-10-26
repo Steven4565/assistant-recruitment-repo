@@ -4,7 +4,7 @@
 #include <conio.h>
 #include <stdio.h>
 
-char getInput()
+char getKbdInput()
 {
 	if (kbhit())
 	{

@@ -14,6 +14,9 @@
 #include "events/events.h"
 #include "events/handlers/enemyHandler.h"
 
+#include "globals.c"
+#include "globals.h"
+
 bool endGame = false;
 
 void startEventLoop(void (*mainLoop)())
@@ -22,22 +25,29 @@ void startEventLoop(void (*mainLoop)())
 	Timer enemy = {clock(), 4000, 0};
 	while (!endGame)
 	{
-		frame.msec = (clock() - frame.before) * 1000 / CLOCKS_PER_SEC;
-		enemy.msec = (clock() - enemy.before) * 1000 / CLOCKS_PER_SEC;
+		getTimerInterval(&frame);
+		getTimerInterval(&enemy);
 
 		// MAIN LOOP
-		if (frame.msec >= frame.delay)
-		{
-			frame.before = clock();
-
-			// Run main event here
-			mainLoop();
-		}
+		runEvent(&frame, mainLoop);
 
 		// EMIT EVENTS
 		emitEvent(&enemy, &(events.onEnemyEmitted));
 
 		// TODO: optimize delay with usleep
+	}
+}
+
+void render()
+{
+	switch (currentStage)
+	{
+	case mainMenu:
+		/* code */
+		break;
+
+	default:
+		break;
 	}
 }
 
@@ -47,21 +57,16 @@ void mainLoop()
 	clrscr();
 
 	// get input
-	char input = getInput();
+	char input = getKbdInput();
 
 	// handle events
 	handleEnemy();
 
 	// render
-	printf("input: %c", input);
-}
-
-void init()
-{
+	render(currentStage);
 }
 
 int main()
 {
-	init();
-	startEventLoop(&mainLoop);
+	// startEventLoop(&mainLoop); // this is for starting the main event
 }
