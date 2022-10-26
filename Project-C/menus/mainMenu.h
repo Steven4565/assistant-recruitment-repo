@@ -69,10 +69,16 @@ void handleMenuLoopInput(int index, bool *runMenu)
 	switch (index)
 	{
 	case 0:
-		// prompt to new game
+		printString("Input your new name: ");
+		char name[100];
+		getLine(name);
+		// TODO: input to database
+		// TODO: start lobby
+		puts("Press enter to continue");
+		getch();
 		break;
 	case 1:
-		// prompt to load game
+		// TODO: start loadGameLoop()
 		break;
 	case 2:
 		printControls();
@@ -82,6 +88,7 @@ void handleMenuLoopInput(int index, bool *runMenu)
 		break;
 	case 4:
 		*runMenu = false;
+		clrscr();
 		puts("Exitting...");
 		getch();
 		break;

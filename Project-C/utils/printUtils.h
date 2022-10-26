@@ -13,4 +13,9 @@ void printInt(char *str, int value)
 	printf("%s: %d\n", str, value);
 }
 
+void printString(char *str)
+{
+	printf("%s", str);
+}
+
 #endif

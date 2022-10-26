@@ -46,4 +46,9 @@ int getMenuScrollInput(char input, int *index, int min, int max)
 	return -2;
 }
 
+void getLine(char *str)
+{
+	scanf("%[^\n]%*c", str);
+}
+
 #endif
