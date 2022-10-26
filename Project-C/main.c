@@ -2,54 +2,66 @@
 #include <time.h>
 #include <stdbool.h>
 #include <conio.h>
-#include <unistd.h>
 
-int msec = 0;
-int FRAME_DELAY = 20;
+#include "config.h"
+
+#include "utils/printUtils.h"
+#include "utils/inputUtils.h"
+#include "utils/eventTimer.h"
+
+#include "events/eventStruct.h"
+#include "events/events.c"
+#include "events/events.h"
+#include "events/handlers/enemyHandler.h"
+
 bool endGame = false;
 
-void clrscr()
+void startEventLoop(void (*mainLoop)())
 {
-	printf("\e[1;1H\e[2J");
-}
-
-char getInput()
-{
-	if (kbhit())
-	{
-		return getch();
-	}
-	else
-	{
-		return ' ';
-	}
-}
-
-void startEventLoop(void (*logic)())
-{
-	clock_t before = clock();
+	Timer frame = {clock(), 20, 0};
+	Timer enemy = {clock(), 4000, 0};
 	while (!endGame)
 	{
-		clock_t difference = clock() - before;
-		msec = difference * 1000 / CLOCKS_PER_SEC;
-		if (msec >= FRAME_DELAY)
-		{
-			before = clock();
+		frame.msec = (clock() - frame.before) * 1000 / CLOCKS_PER_SEC;
+		enemy.msec = (clock() - enemy.before) * 1000 / CLOCKS_PER_SEC;
 
-			// run logic here
-			logic();
+		// MAIN LOOP
+		if (frame.msec >= frame.delay)
+		{
+			frame.before = clock();
+
+			// Run main event here
+			mainLoop();
 		}
+
+		// EMIT EVENTS
+		emitEvent(&enemy, &(events.onEnemyEmitted));
+
+		// TODO: optimize delay with usleep
 	}
 }
 
-void logic()
+void mainLoop()
 {
-	char input = getInput();
+	// clear screen
 	clrscr();
+
+	// get input
+	char input = getInput();
+
+	// handle events
+	handleEnemy();
+
+	// render
 	printf("input: %c", input);
+}
+
+void init()
+{
 }
 
 int main()
 {
-	startEventLoop(&logic);
+	init();
+	startEventLoop(&mainLoop);
 }

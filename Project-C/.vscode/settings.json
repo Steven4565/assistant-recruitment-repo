@@ -1,0 +1,13 @@
+{
+	"files.associations": {
+		"typeinfo": "c",
+		"eventtimer.h": "c",
+		"enemyhandler.h": "c",
+		"stdbool.h": "c",
+		"eventstruct.h": "c",
+		"events.h": "c",
+		"stdio.h": "c",
+		"printutils.h": "c",
+		"config.h": "c"
+	}
+}

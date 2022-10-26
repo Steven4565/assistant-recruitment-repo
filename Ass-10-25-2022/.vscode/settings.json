@@ -13,6 +13,8 @@
 		"malloc.h": "c",
 		"delete.h": "c",
 		"insert.h": "c",
-		"ctype.h": "c"
+		"ctype.h": "c",
+		"*.ipp": "c",
+		"INSERTENTRY.H": "cpp"
 	},
 }
