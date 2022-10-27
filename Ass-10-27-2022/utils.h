@@ -96,4 +96,28 @@ void sortArrayAsc(char nameArr[100][100], char numberArr[100][100], char address
 	}
 }
 
+int searchEntry(char nameArr[100][100], int left, int right, char *name)
+{
+	if (right >= left)
+	{
+		int mid = left + (right - left) / 2;
+		// printf("left: %d\nright: %d\n\n", left, right);
+
+		if (strcmp(name, nameArr[mid]) == 0)
+		{
+			return mid;
+		}
+		else if (strcmp(name, nameArr[mid]) > 0)
+		{
+			return searchEntry(nameArr, left, mid - 1, name);
+		}
+		else
+		{
+			return searchEntry(nameArr, mid - 1, right, name);
+		}
+	}
+
+	return -1;
+}
+
 #endif
