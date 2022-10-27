@@ -2,6 +2,7 @@
 #define UTILS_H
 
 #include <stdio.h>
+#include <string.h>
 
 void clrscr()
 {
@@ -26,6 +27,73 @@ void printString(char *str)
 void getLine(char *str)
 {
 	scanf("%[^\n]%*c", str);
+}
+
+void swapString(char string1[100], char string2[100])
+{
+	char temp[100] = "";
+	strcpy(temp, string1);
+	strcpy(string1, string2);
+	strcpy(string2, temp);
+}
+
+bool str1Bigger(char *string1, char *string2)
+{
+	int minLength = (strlen(string1) < strlen(string2) ? strlen(string1) : strlen(string2));
+	for (size_t i = 0; i < minLength; i++)
+	{
+		if (string1[i] > string2[i])
+		{
+			return false;
+		}
+	}
+	return true;
+}
+
+void sortArrayDesc(char nameArr[100][100], char numberArr[100][100], char addressArr[100][100], int length)
+{
+	for (int i = 0; i < length - 1; i++)
+	{
+		for (int j = i; j < length - i - 1; j++)
+		{
+
+			if (strcmp(nameArr[j], nameArr[j + 1]) < 0)
+			{
+				// printf("swapped, i: %d\n", i);
+				swapString(nameArr[j], nameArr[j + 1]);
+				swapString(numberArr[j], numberArr[j + 1]);
+				swapString(addressArr[j], addressArr[j + 1]);
+				// for (int k = 0; k < length; k++)
+				// {
+				// 	printf("%s\n", nameArr[k]);
+				// }
+				// puts("");
+			}
+		}
+	}
+}
+
+void sortArrayAsc(char nameArr[100][100], char numberArr[100][100], char addressArr[100][100], int length)
+{
+	for (int i = 0; i < length - 1; i++)
+	{
+		for (int j = 0; j < length - i - 1; j++)
+		{
+
+			if (strcmp(nameArr[j], nameArr[j + 1]) > 0)
+			{
+				// printf("swapped, i: %d\n", i);
+				swapString(nameArr[j], nameArr[j + 1]);
+				swapString(numberArr[j], numberArr[j + 1]);
+				swapString(addressArr[j], addressArr[j + 1]);
+				// for (int k = 0; k < length; k++)
+				// {
+				// 	printf("%s\n", nameArr[k]);
+				// }
+				// puts("");
+			}
+		}
+	}
 }
 
 #endif

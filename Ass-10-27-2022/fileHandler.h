@@ -33,7 +33,7 @@ void insertEntry(char *name, char *num, char *addr)
 		return;
 	}
 
-	// fwrite();
+	fprintf(file, "%s#%s#%s\n", name, num, addr);
 
 	fclose(file);
 }

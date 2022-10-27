@@ -8,6 +8,11 @@
     "functional": "c",
     "tuple": "c",
     "utility": "c",
-    "string.h": "c"
+    "string.h": "c",
+    "utils.h": "c",
+    "algorithm": "c",
+    "filehandler.h": "c",
+    "inputhandler.h": "c",
+    "stdbool.h": "c"
   }
 }

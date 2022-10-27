@@ -7,6 +7,7 @@
 #include "utils.h"
 #include "validator.h"
 #include "inputHandler.h"
+#include "fileHandler.h"
 
 void printMenu()
 {
@@ -52,13 +53,13 @@ void handleMenuInput(char input, bool *endProgram)
 			getLine(address);
 		}
 
-		puts("");
-		puts(name);
-		puts(phoneNumber);
-		puts(address);
-		getchar();
+		// puts("");
+		// puts(name);
+		// puts(phoneNumber);
+		// puts(address);
+		// getchar();
 
-		// TODO: input to database
+		insertEntry(name, phoneNumber, address);
 
 		break;
 	case '2':
@@ -76,12 +77,44 @@ void handleMenuInput(char input, bool *endProgram)
 
 		break;
 	case '3':
-		// TODO:
+		printString("Input option (DESC/ASC): ");
+		char viewInput[100];
+		scanf("%s", viewInput);
+		while (stricmp(viewInput, "ASC") != 0 && stricmp(viewInput, "DESC") != 0)
+		{
+			scanf("%s%*c", viewInput);
+		}
+
+		char nameArr[100][100];
+		char numberArr[100][100];
+		char addressArr[100][100];
+		int length;
+		getFileEntries(nameArr, numberArr, addressArr, &length);
+
+		if (stricmp(viewInput, "asc") == 0)
+		{
+			printf("compare: %d\nstring: %s\n", stricmp(viewInput, "asc"), viewInput);
+			sortArrayAsc(nameArr, numberArr, addressArr, length);
+			for (int i = 0; i < length; i++)
+			{
+				printf("no: %d\nname: %s\nnumber: %s\naddress: %s\n\n", i + 1, nameArr[i], numberArr[i], addressArr[i]);
+			}
+		}
+		else
+		{
+			sortArrayDesc(nameArr, numberArr, addressArr, length);
+			for (int i = 0; i < length; i++)
+			{
+				printf("no: %d\nname: %s\nnumber: %s\naddress: %s\n\n", i + 1, nameArr[i], numberArr[i], addressArr[i]);
+			}
+		}
+
+		getchar();
 		break;
 	case '4':
 		puts("program exitted. Press enter to continue...");
 		getchar();
-		*endProgram = false;
+		*endProgram = true;
 		break;
 	default:
 		break;
