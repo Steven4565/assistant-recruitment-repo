@@ -5,7 +5,7 @@
 #include <string.h>
 #include <malloc.h>
 
-void getFileEntries(char *nameArr[], char *numberArr[], char *addressArr[], int *length)
+void getFileEntries(char nameArr[100][100], char numberArr[100][100], char addressArr[100][100], int *length)
 {
 	FILE *file = fopen("file.txt", "r");
 	if (file == NULL)
@@ -15,25 +15,10 @@ void getFileEntries(char *nameArr[], char *numberArr[], char *addressArr[], int 
 	}
 
 	int index = 0;
-	// while (fscanf(file, "%[^#]#%[^#]#%[^\n]\n", nameArr[index], numberArr[index], addressArr[index]) != EOF)
-	// {
-	// 	index++;
-	// }
-
-	char name[1000];
-	char num[1000];
-	char addr[1000];
-	while (fscanf(file, "%[^#]#%[^#]#%[^\n]\n", name, num, addr) != EOF)
+	while (fscanf(file, "%[^#]#%[^#]#%[^\n]\n", &(nameArr[index]), &(numberArr[index]), &(addressArr[index])) != EOF)
 	{
-		nameArr[index] = malloc(strlen(name) + 1);
-		numberArr[index] = malloc(strlen(num) + 1);
-		addressArr[index] = malloc(strlen(addr) + 1);
-		strcpy(nameArr[index], name);
-		strcpy(numberArr[index], num);
-		strcpy(addressArr[index], addr);
 		index++;
 	}
-
 	*length = index;
 
 	fclose(file);

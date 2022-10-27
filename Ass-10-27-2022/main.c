@@ -26,9 +26,9 @@ int main()
 	// 	handleMenuInput(input, &endProgram);
 	// }
 
-	char *nameArr[100];
-	char *numberArr[100];
-	char *addressArr[100];
+	char nameArr[100][100];
+	char numberArr[100][100];
+	char addressArr[100][100];
 	int length;
 	getFileEntries(nameArr, numberArr, addressArr, &length);
 	printInt(length);
