@@ -20,8 +20,8 @@ void startEventLoop(void (*gameLoop)())
 	Timer enemy = {clock(), 4000, 0};
 	while (!endGame)
 	{
-		getTimerInterval(&frame);
-		getTimerInterval(&enemy);
+		setTimerInterval(&frame);
+		setTimerInterval(&enemy);
 
 		// MAIN LOOP
 		runEvent(&frame, gameLoop);

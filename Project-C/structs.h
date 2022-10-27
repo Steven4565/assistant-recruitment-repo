@@ -17,9 +17,9 @@ typedef struct Node
 
 typedef struct Sprite
 {
-	char **sprite;
 	int w;
 	int h;
+	char **sprite;
 } Sprite;
 
 typedef struct PlayerAttributes

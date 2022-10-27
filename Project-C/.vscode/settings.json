@@ -11,6 +11,9 @@
 		"config.h": "c",
 		"inpututils.h": "c",
 		"unistd.h": "c",
-		"globals.h": "c"
+		"globals.h": "c",
+		"fileutils.h": "c",
+		"string.h": "c",
+		"structs.h": "c"
 	}
 }

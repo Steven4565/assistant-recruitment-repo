@@ -11,7 +11,7 @@ typedef struct Timer
 	int msec;
 } Timer;
 
-void getTimerInterval(Timer *timer)
+void setTimerInterval(Timer *timer)
 {
 	timer->msec = (clock() - timer->before) * 1000 / CLOCKS_PER_SEC;
 }
