@@ -16,11 +16,26 @@
 
 #include "menus/mainMenu.h"
 
-#include "globals.c"
 #include "globals.h"
+
+#include <unistd.h>
 
 int main()
 {
+	if (DEBUG)
+	{
+		char cwd[1000];
+		if (getcwd(cwd, sizeof(cwd)) != NULL)
+		{
+			printf("Current working dir: %s\n", cwd);
+		}
+		else
+		{
+			perror("getcwd() error");
+		}
+		puts(cwd);
+		getchar();
+	}
 
 	menuLoop();
 	// startEventLoop(&gameLoop); // this is for starting the main event

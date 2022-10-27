@@ -1,6 +1,8 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
+#include "globals.c"
+
 enum Menus
 {
 	mainMenu,
@@ -9,9 +11,10 @@ enum Menus
 	chooseData,
 	settings,
 	howToPlay,
-	exit,
 	lobby,
 	game
 };
+
+extern Sprite player;
 
 #endif

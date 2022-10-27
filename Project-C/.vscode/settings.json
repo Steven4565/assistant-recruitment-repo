@@ -9,6 +9,8 @@
 		"stdio.h": "c",
 		"printutils.h": "c",
 		"config.h": "c",
-		"inpututils.h": "c"
+		"inpututils.h": "c",
+		"unistd.h": "c",
+		"globals.h": "c"
 	}
 }

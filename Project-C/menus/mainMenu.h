@@ -41,6 +41,7 @@ void printTutorial()
 {
 	clrscr();
 	puts("\tSpace Invader");
+	puts("");
 	puts("\tThe object of the game is, basically, to shoot the invaders with your shooter");
 	puts("\twhile avoiding their shots and preventing an invasion  Amassing a high score is a further");
 	puts("\tobjective and one that must be prioritised against your continued survival.");
