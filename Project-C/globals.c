@@ -1,6 +1,9 @@
 #include "globals.h"
 #include "structs.h"
 
-// enum Menus currentStage = mainMenu;
-
 Sprite player = {NULL, 0, 0};
+Sprite board = {NULL, 0, 0};
+Sprite boardOpenedGate = {NULL, 0, 0};
+Sprite enemy1;
+Sprite enemy2;
+Sprite enemy3;

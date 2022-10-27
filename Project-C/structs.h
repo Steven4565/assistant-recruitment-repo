@@ -63,6 +63,8 @@ typedef struct Bullet
 {
 	Node bullet;
 	int bulletOwner;
+	int bulletDamage;
+	int bulletType;
 } Bullet;
 
 // DATABASE TYPES

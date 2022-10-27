@@ -35,15 +35,6 @@ void startEventLoop(void (*gameLoop)())
 
 void render()
 {
-	switch (currentStage)
-	{
-	case mainMenu:
-		/* code */
-		break;
-
-	default:
-		break;
-	}
 }
 
 void gameLoop()

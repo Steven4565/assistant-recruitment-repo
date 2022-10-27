@@ -3,18 +3,10 @@
 
 #include "globals.c"
 
-enum Menus
+enum BulletOwner
 {
-	mainMenu,
-	newGame,
-	loadGame,
-	chooseData,
-	settings,
-	howToPlay,
-	lobby,
-	game
+	bulletOwner_player,
+	bulletOwner_enemy,
 };
-
-extern Sprite player;
 
 #endif
