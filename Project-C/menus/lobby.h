@@ -10,10 +10,43 @@
 #include "../globals.h"
 #include "../utils/printUtils.h"
 #include "../utils/inputUtils.h"
+#include "../utils/gameUtils.h"
+
+char *getLobbyMessage(Vector2D player)
+{
+	int x = player.x;
+	int y = player.y;
+	if (checkShops(lobbyShop, player))
+	{
+		return "Press SPACE to open item shop";
+	}
+
+	if (checkShops(lobbyUpgrade, player))
+	{
+		return "Press SPACE to open upgrades";
+	}
+
+	if (x == 5 && (y >= 9 && y <= 11))
+	{
+		return "Press SPACE to check leaderboards";
+	}
+
+	if (x == 17 && y == 20)
+	{
+		return "Press SPACE to exit";
+	}
+
+	if (x == 17 && y == 10)
+	{
+		return "Press SPACE to start game";
+	}
+
+	return "";
+}
 
 void renderLobby(Vector2D player)
 {
-	char *message = "";
+	char *message;
 	clrscr();
 	for (int i = 0; i < lobby.h; i++)
 	{
@@ -28,12 +61,18 @@ void renderLobby(Vector2D player)
 			}
 
 			// check for messages, set here
+			message = getLobbyMessage(player);
+
 			printf("%c", spriteChar);
-		}
+		};
 		// render messages next to board
 		if (i == 10)
 		{
 			printf("\tPlayer: %d, %d", player.x, player.y);
+		}
+		else if (i == 15)
+		{
+			printf("\t%s", message);
 		}
 		puts("");
 	}
@@ -42,12 +81,15 @@ void renderLobby(Vector2D player)
 void movePlayer(Vector2D *player, Vector2D input)
 {
 	// check for collission
-	// if no collision, move player
-	player->x += input.x;
-	player->y += input.y;
+	if (checkLobbyCollision(player->x + input.x, player->y + input.y))
+	{
+		// if no collision, move player
+		player->x += input.x;
+		player->y += input.y;
+	}
 }
 
-void handleLobbyInput(char inputChar, Vector2D *inputVector)
+void handleMoveVector(char inputChar, Vector2D *inputVector)
 {
 	switch (inputChar)
 	{
@@ -68,9 +110,38 @@ void handleLobbyInput(char inputChar, Vector2D *inputVector)
 		inputVector->y = 0;
 		return;
 	default:
-		inputVector->x = 0;
-		inputVector->y = 0;
 		return;
+	}
+}
+
+void handleLobbyInteract(Vector2D player, char inputChar, bool *runLobby)
+{
+	int x = player.x;
+	int y = player.y;
+
+	if (checkShops(lobbyShop, player))
+	{
+		// TODO: loop lobby shop
+	}
+
+	if (checkShops(lobbyUpgrade, player))
+	{
+		// TODO: loop lobby upgrade
+	}
+
+	if (x == 5 && (y >= 9 && y <= 11))
+	{
+		getLeaderboard();
+	}
+
+	if (x == 17 && y == 20)
+	{
+		*runLobby = false;
+	}
+
+	if (x == 17 && y == 10)
+	{
+		// TODO: start game
 	}
 }
 
@@ -79,16 +150,26 @@ void lobbyLoop()
 	bool runLobby = true;
 	Vector2D player = {17, 19};
 
-	char *lobbyMessages;
+	// create game data here? pass to handleLobbyInteract
+	GameData game;
+
 	renderLobby(player);
 
 	while (runLobby)
 	{
 		clrscr();
 		renderLobby(player);
-		Vector2D input = {0, 0};
-		handleLobbyInput(getch(), &input);
-		movePlayer(&player, input);
+
+		Vector2D moveVector = {0, 0};
+		char inputChar = getch();
+		handleMoveVector(inputChar, &moveVector);
+
+		// check for space (interact)
+		if (inputChar == ' ')
+			handleLobbyInteract(player, inputChar, &runLobby);
+		movePlayer(&player, moveVector);
+
+		usleep(10000);
 	}
 }
 

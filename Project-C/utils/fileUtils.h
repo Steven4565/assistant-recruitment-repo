@@ -5,6 +5,7 @@
 #include <malloc.h>
 #include <stdio.h>
 #include <string.h>
+#include <conio.h>
 
 void loadSprite(Sprite *sprite, char *filePath)
 {
@@ -39,6 +40,42 @@ void loadSprite(Sprite *sprite, char *filePath)
 	// }
 
 	fclose(file);
+}
+
+void loadDatabase()
+{
+	FILE *handle = fopen("./database/score.dat", "r");
+	char name[50];
+	int money, xp, level, hp, armor;
+	double energy;
+
+	int index = 0;
+	while (fscanf(handle, "%[^#]#%d#%d#%d#%d#%lf#%d\n", &name, &money, &xp, &level, &hp, &energy, &armor) != EOF)
+	{
+		// TODO: load to cache here
+	}
+
+	if (DEBUG)
+	{
+		puts("Press any key to continue");
+		getch();
+	}
+}
+
+void getLeaderboard()
+{
+	clrscr();
+
+	FILE *handle = fopen("./database/score.dat", "r");
+	char name[50];
+	int score;
+	printf("Name | Score\n");
+	while (fscanf(handle, "%[^#]#%d\n", &name, &score) != EOF)
+	{
+		printf("%s | %d\n", name, score);
+	}
+	puts("Press any key to continue");
+	getch();
 }
 
 #endif

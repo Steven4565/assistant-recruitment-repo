@@ -23,17 +23,23 @@
 
 void init()
 {
+	// Initialize sprites
 	loadSprite(&space1, "assets/space_1.txt");
 	loadSprite(&space2, "assets/space_2.txt");
 	loadSprite(&space3, "assets/space_3.txt");
 	loadSprite(&space4, "assets/space_4.txt");
-	loadSprite(&board, "assets/game.txt");
+	loadSprite(&board, "asssets/game.txt");
 	loadSprite(&lobby, "assets/lobby.txt");
-	loadSprite(&lobbyOpenedGate, "assets/lobby.txt");
 	loadSprite(&enemy1, "assets/enemy_1.txt");
 	loadSprite(&enemy2, "assets/enemy_2.txt");
 	loadSprite(&enemy3, "assets/enemy_3.txt");
-	getch();
+	lobby.sprite[lobbyShop.y][lobbyShop.x] = 'I';
+	lobby.sprite[lobbyUpgrade.y][lobbyUpgrade.x] = 'U';
+	lobby.sprite[lobbyShop.y][lobbyShop.x] = 'I';
+	lobby.sprite[lobbyUpgrade.y][lobbyUpgrade.x] = 'U';
+
+	// Load player data from database
+	loadDatabase();
 }
 
 int main()

@@ -69,22 +69,16 @@ typedef struct Bullet
 
 // DATABASE TYPES
 
-typedef struct Score
+typedef struct PlayerEntry
 {
-	char *name;
-	int score;
-} Score;
-
-typedef struct PlayerDatabase
-{
-	char *name;
+	char name[50];
 	int money;
 	int xp;
 	int level;
 	int hp;
 	double energy;
 	int armor;
-} PlayerDatabase;
+} PlayerEntry;
 
 // Global game data
 
