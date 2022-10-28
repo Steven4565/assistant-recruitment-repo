@@ -6,6 +6,7 @@
 #include "../utils/inputUtils.h"
 #include "../utils/printUtils.h"
 #include "newGame.h"
+#include "loadGame.h"
 
 void printControls()
 {
@@ -64,11 +65,16 @@ void handleMenuLoopInput(int index, bool *runMenu)
 		printString("Input your new name: ");
 		char name[100];
 		getLine(name);
-		// TODO: input to database
-		// TODO: start lobby
+
+		int index = insertUser(name, 0, 0, 1, 100, 50, 1, 1);
+		loadUser(playerEntries[index]);
+		puts(currentPlayer.name);
+
+		bool _; // I'm too lazy to make the last parameter optional
+		startNewGame(index, &_);
 		break;
 	case 1:
-		newGameLoop();
+		loadGameLoop();
 		break;
 	case 2:
 		printControls();

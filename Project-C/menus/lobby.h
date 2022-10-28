@@ -3,6 +3,7 @@
 
 #include <time.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "../globals.h"
 #include "../utils/eventTimer.h"
 #include "../events/eventStruct.h"

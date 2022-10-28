@@ -1,56 +1,50 @@
 #ifndef LOAD_GAME_H
 #define LOAD_GAME_H
 
-#include <time.h>
 #include <stdio.h>
-#include <unistd.h>
-#include "../utils/eventTimer.h"
-#include "../events/eventStruct.h"
-#include "../events/events.h"
-#include "../globals.h"
-#include "../globals.c"
-#include "../utils/printUtils.h"
+#include <conio.h>
 #include "../utils/inputUtils.h"
-#include "../events/handlers/enemyHandler.h"
+#include "../utils/printUtils.h"
+#include "../utils/fileUtils.h"
+#include "../menus/lobby.h"
+#include "../globals.h"
 
-void startEventLoop(void (*gameLoop)())
+void startNewGame(int index, bool *runLoadGameMenu)
 {
-	bool endGame = false;
-	Timer frame = {clock(), 20, 0};
-	Timer enemy = {clock(), 4000, 0};
-	while (!endGame)
-	{
-		setTimerInterval(&frame);
-		setTimerInterval(&enemy);
+	loadUser(playerEntries[index]);
 
-		// MAIN LOOP
-		runEvent(&frame, gameLoop);
+	lobbyLoop();
 
-		// EMIT EVENTS
-		emitEvent(&enemy, &(events.onEnemyEmitted));
-
-		// for optimization
-		usleep(10000);
-	}
-}
-
-void render()
-{
-}
-
-void gameLoop()
-{
-	// clear screen
+	// Exit
 	clrscr();
+	*runLoadGameMenu = false;
 
-	// get input
-	char input = getKbdInput();
+	// TODO: update to database
+}
 
-	// handle events
-	handleEnemy();
+void loadGameLoop()
+{
+	bool runLoadGameMenu = true;
+	int index = 0;
 
-	// render
-	render();
+	char *arr[playerEntryCount];
+	for (int i = 0; i < playerEntryCount; i++)
+	{
+		arr[i] = playerEntries[i].name;
+	}
+
+	printMenu(index, arr, playerEntryCount);
+
+	while (runLoadGameMenu)
+	{
+		clrscr();
+		printMenu(index, arr, playerEntryCount);
+		char input = getch();
+		if (getMenuScrollInput(input, &index, 0, playerEntryCount) == -1)
+		{
+			startNewGame(index, &runLoadGameMenu);
+		}
+	}
 }
 
 #endif

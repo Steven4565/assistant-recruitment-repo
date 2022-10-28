@@ -78,6 +78,7 @@ typedef struct PlayerEntry
 	int hp;
 	double energy;
 	int armor;
+	int damage;
 } PlayerEntry;
 
 // Global game data

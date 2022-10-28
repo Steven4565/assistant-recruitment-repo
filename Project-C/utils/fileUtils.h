@@ -2,6 +2,7 @@
 #define FILE_UTILS_H
 
 #include "../structs.h"
+#include "../globals.h"
 #include <malloc.h>
 #include <stdio.h>
 #include <string.h>
@@ -18,10 +19,10 @@ void loadSprite(Sprite *sprite, char *filePath)
 		// printInt("height", height);
 	}
 
-	FILE *file = fopen(filePath, "r");
+	FILE *handle = fopen(filePath, "r");
 	for (int i = 0; i < height + 1; i++)
 	{
-		fscanf(file, "%[^\n]\n", sprite->sprite[i]);
+		fscanf(handle, "%[^\n]\n", sprite->sprite[i]);
 	}
 
 	// check array by printing it out
@@ -39,27 +40,44 @@ void loadSprite(Sprite *sprite, char *filePath)
 	// 	puts("");
 	// }
 
-	fclose(file);
+	fclose(handle);
 }
 
 void loadDatabase()
 {
-	FILE *handle = fopen("./database/score.dat", "r");
+	FILE *handle = fopen("./database/player.dat", "r");
 	char name[50];
-	int money, xp, level, hp, armor;
+	int money, xp, level, hp, armor, damage;
 	double energy;
 
 	int index = 0;
-	while (fscanf(handle, "%[^#]#%d#%d#%d#%d#%lf#%d\n", &name, &money, &xp, &level, &hp, &energy, &armor) != EOF)
+
+	PlayerEntry *entry = &playerEntries[index];
+	while (fscanf(handle, "%[^#]#%d#%d#%d#%d#%lf#%d#%d\n", name, &money, &xp, &level, &hp, &energy, &armor, &damage) != EOF)
 	{
-		// TODO: load to cache here
+		strcpy(entry->name, name);
+		entry->money = money;
+		entry->xp = xp;
+		entry->level = level;
+		entry->hp = hp;
+		// printInt("armor", hp);
+		entry->energy = energy;
+		entry->armor = armor;
+		entry->damage = damage;
+		index++;
+		entry = &playerEntries[index];
 	}
+
+	playerEntryCount = index;
 
 	if (DEBUG)
 	{
-		puts("Press any key to continue");
-		getch();
+		// printf("last index name: %d\n", playerEntries[index - 1].damage);
+		// puts("Press any key to continue");
+		// getch();
 	}
+
+	fclose(handle);
 }
 
 void getLeaderboard()
@@ -76,6 +94,34 @@ void getLeaderboard()
 	}
 	puts("Press any key to continue");
 	getch();
+
+	fclose(handle);
+}
+
+void loadUser(PlayerEntry user)
+{
+	currentPlayer = user;
+}
+
+int insertUser(char *name, int money, int xp, int level, int hp, double energy, int armor, int damage)
+{
+	PlayerEntry *entry = &playerEntries[playerEntryCount];
+	strcpy(entry->name, name);
+	entry->money = money;
+	entry->xp = xp;
+	entry->level = level;
+	entry->hp = hp;
+	entry->energy = energy;
+	entry->armor = armor;
+	entry->damage = damage;
+	playerEntryCount++;
+
+	FILE *handle = fopen("./database/player.dat", "a");
+	fprintf(handle, "%s#%d#%d#%d#%d#%.0lf#%d#%d\n", name, money, xp, level, hp, energy, armor, damage);
+
+	fclose(handle);
+
+	return playerEntryCount - 1;
 }
 
 #endif

@@ -43,3 +43,5 @@ Vector2D lobbyShop = {27, 16};
 
 PlayerEntry playerEntries[100];
 int playerEntryCount = 0;
+
+PlayerEntry currentPlayer;
