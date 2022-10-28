@@ -10,25 +10,35 @@ void loadSprite(Sprite *sprite, char *filePath)
 {
 	int width = sprite->w;
 	int height = sprite->h;
-	sprite->sprite = malloc((height));
-	for (int i = 0; i < height; i++)
+
+	if (DEBUG)
 	{
-		(sprite->sprite)[i] = malloc(width + 1);
+		// printInt("width", width);
+		// printInt("height", height);
 	}
 
 	FILE *file = fopen(filePath, "r");
-	for (int i = 0; i < height; i++)
+	for (int i = 0; i < height + 1; i++)
 	{
-		char buffer[100];
-		fscanf(file, "%[^\n]\n", buffer);
-		char *spriteRow = sprite->sprite[i];
-		puts(buffer);
-		printInt("i", i);
-		strcpy(spriteRow, buffer);
-		// printInt("size", sizeof(spriteRow));
+		fscanf(file, "%[^\n]\n", sprite->sprite[i]);
 	}
 
-	// fclose(file);
+	// check array by printing it out
+	// puts("\nstring: ");
+	// for (int i = 0; i < height + 1; i++)
+	// {
+	// 	for (int j = 0; j < width; j++)
+	// 	{
+	// 		printf("%c", sprite->sprite[i][j]);
+	// 	}
+	// 	// for (int j = 0; j < width; j++)
+	// 	// {
+	// 	// 	printf("%d", i);
+	// 	// }
+	// 	puts("");
+	// }
+
+	fclose(file);
 }
 
 #endif

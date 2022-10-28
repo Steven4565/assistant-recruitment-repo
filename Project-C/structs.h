@@ -19,7 +19,7 @@ typedef struct Sprite
 {
 	int w;
 	int h;
-	char **sprite;
+	char sprite[52][52];
 } Sprite;
 
 typedef struct PlayerAttributes

@@ -14,6 +14,10 @@
 		"globals.h": "c",
 		"fileutils.h": "c",
 		"string.h": "c",
-		"structs.h": "c"
+		"structs.h": "c",
+		"mainmenu.h": "c",
+		"events.c": "cpp",
+		"globals.c": "cpp",
+		"malloc.h": "c"
 	}
 }

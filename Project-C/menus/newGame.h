@@ -5,11 +5,12 @@
 #include <conio.h>
 #include "../utils/inputUtils.h"
 #include "../utils/printUtils.h"
+#include "../menus/lobby.h"
 
 void handleNewGameLoopInput(int index, int arrLength, bool *runNewGame)
 {
 	// TODO: load user
-	// TODO: startLobbyLoop();
+	lobbyLoop();
 	if (index == arrLength)
 	{
 		clrscr();

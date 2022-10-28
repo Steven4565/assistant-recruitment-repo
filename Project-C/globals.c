@@ -27,13 +27,17 @@ const int TOTAL_SPACE = 4;
 const int ENEMY_WIDTH = 3;
 
 // sprite, width, height
-Sprite space1 = {NULL, 5, 5};
-Sprite space2 = {NULL, 7, 5};
-Sprite space3 = {NULL, 3, 4};
-Sprite space4 = {NULL, 7, 5};
-Sprite board = {NULL, 50, 50};
-Sprite lobby = {NULL, 35, 23};
-Sprite lobbyOpenedGate = {NULL, 35, 23};
-Sprite enemy1 = {NULL, 3, 1};
-Sprite enemy2 = {NULL, 3, 1};
-Sprite enemy3 = {NULL, 3, 1};
+
+Sprite space1 = {5, 5};
+Sprite space2 = {7, 5};
+Sprite space3 = {3, 4};
+Sprite space4 = {7, 5};
+Sprite board = {49, 22};
+Sprite lobby = {34, 22};
+Sprite lobbyOpenedGate = {34, 22};
+Sprite enemy1 = {3, 1};
+Sprite enemy2 = {3, 1};
+Sprite enemy3 = {3, 1};
+
+Vector2D lobbyUpgrade = {6, 16};
+Vector2D lobbyShop = {27, 16};

@@ -3,9 +3,9 @@
 
 #include <time.h>
 #include <stdio.h>
+#include <unistd.h>
 #include "../utils/eventTimer.h"
 #include "../events/eventStruct.h"
-#include "../events/events.c"
 #include "../events/events.h"
 #include "../globals.h"
 #include "../globals.c"
@@ -29,7 +29,8 @@ void startEventLoop(void (*gameLoop)())
 		// EMIT EVENTS
 		emitEvent(&enemy, &(events.onEnemyEmitted));
 
-		// TODO: optimize delay with usleep
+		// for optimization
+		usleep(10000);
 	}
 }
 
