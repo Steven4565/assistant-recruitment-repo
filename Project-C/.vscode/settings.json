@@ -18,6 +18,7 @@
 		"mainmenu.h": "c",
 		"events.c": "cpp",
 		"globals.c": "cpp",
-		"malloc.h": "c"
+		"malloc.h": "c",
+		"variant": "c"
 	}
 }

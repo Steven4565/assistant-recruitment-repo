@@ -11,9 +11,10 @@
 
 void startNewGame(int index, bool *runLoadGameMenu)
 {
-	loadUser(playerEntries[index]);
-
-	lobbyLoop();
+	if (index < playerEntryCount)
+	{
+		lobbyLoop(index);
+	}
 
 	// Exit
 	clrscr();

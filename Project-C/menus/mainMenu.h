@@ -67,8 +67,7 @@ void handleMenuLoopInput(int index, bool *runMenu)
 		getLine(name);
 
 		int index = insertUser(name, 0, 0, 1, 100, 50, 1, 1);
-		loadUser(playerEntries[index]);
-		puts(currentPlayer.name);
+		lobbyData.playerData = playerEntries[index];
 
 		bool _; // I'm too lazy to make the last parameter optional
 		startNewGame(index, &_);

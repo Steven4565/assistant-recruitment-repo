@@ -98,11 +98,6 @@ void getLeaderboard()
 	fclose(handle);
 }
 
-void loadUser(PlayerEntry user)
-{
-	currentPlayer = user;
-}
-
 int insertUser(char *name, int money, int xp, int level, int hp, double energy, int armor, int damage)
 {
 	PlayerEntry *entry = &playerEntries[playerEntryCount];

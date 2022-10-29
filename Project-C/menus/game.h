@@ -13,6 +13,30 @@
 #include "../utils/gameUtils.h"
 #include "../events/handlers/enemyHandler.h"
 
+void render()
+{
+	char *message = "";
+	clrscr();
+	for (int i = 0; i < board.h; i++)
+	{
+		for (int j = 0; j < board.w; j++)
+		{
+			char spriteChar = getBoardChar(j, i);
+			printf("%c", spriteChar);
+		};
+		// render messages next to board
+		if (i == 15)
+		{
+			printf("\t%s", message);
+		}
+		puts("");
+	}
+}
+
+void handleGameplayInput(char input)
+{
+}
+
 void gameLoop()
 {
 	// clear screen
@@ -34,9 +58,12 @@ void gameLoop()
 	render();
 }
 
+// Functions
+
 void initGame()
 {
 	Node playerNode = {{5, 5}, 5, 5};
+	PlayerEntry currentPlayer = lobbyData.playerData;
 	PlayerAttributes attr = {.xp = currentPlayer.xp,
 													 .level = currentPlayer.level,
 													 .money = currentPlayer.money,
@@ -79,30 +106,6 @@ void startEventLoop()
 		// for optimization
 		usleep(10000);
 	}
-}
-
-void render()
-{
-	char *message = "";
-	clrscr();
-	for (int i = 0; i < board.h; i++)
-	{
-		for (int j = 0; j < board.w; j++)
-		{
-			char spriteChar = getBoardChar(j, i);
-			printf("%c", spriteChar);
-		};
-		// render messages next to board
-		if (i == 15)
-		{
-			printf("\t%s", message);
-		}
-		puts("");
-	}
-}
-
-void handleGameplayInput(char input)
-{
 }
 
 #endif
