@@ -83,7 +83,7 @@ typedef struct PlayerEntry
 typedef struct LobbyData
 {
 	PlayerEntry playerData;
-	Vector2D pos;
+	Node player;
 	Backpack backpack;
 } LobbyData;
 

@@ -86,17 +86,6 @@ void handleMoveVector(char inputChar, Vector2D *inputVector)
 	}
 }
 
-void movePlayer(Sprite board, Vector2D *player, Vector2D input)
-{
-	// check for collission
-	if (checkBoardCollision(board, player->x + input.x, player->y + input.y))
-	{
-		// if no collision, move player
-		player->x += input.x;
-		player->y += input.y;
-	}
-}
-
 bool boardNodeCollided(Sprite board, Node node)
 {
 	for (int i = 0; i < node.h; i++)

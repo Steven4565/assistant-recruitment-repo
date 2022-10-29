@@ -80,7 +80,6 @@ void gameLoop()
 	// handle input
 	Vector2D moveVector = {0, 0};
 	handleGameplayInput(input, &moveVector);
-	// movePlayer(board, &game.currentPlayer.playerNode.pos, moveVector);
 	movePlayerNode(board, &game.currentPlayer.playerNode, moveVector);
 
 	// if bomb => fire onbomb event

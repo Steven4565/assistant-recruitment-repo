@@ -125,7 +125,9 @@ void initLobby(int entryIndex)
 	Vector2D player = {17, 19};
 	Backpack backpack = {0, 0, 0, 0, 0}; // TODO: init backpack here
 
-	lobbyData.pos = player;
+	lobbyData.player.pos = player;
+	lobbyData.player.h = 1;
+	lobbyData.player.w = 1;
 	lobbyData.playerData = playerEntries[entryIndex];
 }
 
@@ -135,12 +137,12 @@ void lobbyLoop(int entryIndex)
 
 	initLobby(entryIndex);
 
-	renderLobby(lobbyData.pos);
+	renderLobby(lobbyData.player.pos);
 
 	while (runLobby)
 	{
 		clrscr();
-		renderLobby(lobbyData.pos);
+		renderLobby(lobbyData.player.pos);
 
 		Vector2D moveVector = {0, 0};
 		char inputChar = getch();
@@ -148,11 +150,9 @@ void lobbyLoop(int entryIndex)
 
 		// check for space (interact)
 		if (inputChar == ' ')
-			handleLobbyInteract(lobbyData.pos, inputChar, &runLobby);
+			handleLobbyInteract(lobbyData.player.pos, inputChar, &runLobby);
 		// TODO: handle other inputs like backpack, talk
-		movePlayer(lobby, &lobbyData.pos, moveVector);
-		// Node temp = {.pos.x = lobbyData.pos.x, .pos.y = lobbyData.pox.y, .w = 1, .h = 1};
-		// movePlayerNode(lobby, temp, moveVector)
+		movePlayerNode(lobby, &lobbyData.player, moveVector);
 
 		usleep(10000);
 	}
