@@ -13,16 +13,22 @@ void loadSprite(Sprite *sprite, char *filePath)
 	int width = sprite->w;
 	int height = sprite->h;
 
-	if (DEBUG)
-	{
-		// printInt("width", width);
-		// printInt("height", height);
-	}
-
 	FILE *handle = fopen(filePath, "r");
-	for (int i = 0; i < height + 1; i++)
+	for (int i = 0; i < height; i++)
 	{
-		fscanf(handle, "%[^\n]\n", sprite->sprite[i]);
+		char str[60];
+		fgets(str, 60, handle);
+		for (int j = 0; j < width + 1; j++)
+		{
+			if (str[j] != '\n' && str[j] != '\0')
+			{
+				sprite->sprite[i][j] = str[j];
+			}
+			else
+			{
+				sprite->sprite[i][j] = ' ';
+			}
+		}
 	}
 
 	// check array by printing it out
@@ -39,6 +45,7 @@ void loadSprite(Sprite *sprite, char *filePath)
 	// 	// }
 	// 	puts("");
 	// }
+	// getch();
 
 	fclose(handle);
 }
