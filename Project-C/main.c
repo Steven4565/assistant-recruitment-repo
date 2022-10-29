@@ -18,6 +18,7 @@
 #include "globals.h"
 
 #include <unistd.h>
+#include <time.h>
 
 void init()
 {
@@ -38,6 +39,8 @@ void init()
 
 	// Load player data from database
 	loadDatabase();
+
+	srand(time(NULL));
 }
 
 int main()
@@ -58,6 +61,12 @@ int main()
 	}
 
 	init();
+
+	// for (int i = 0; i < 10; i++)
+	// {
+	// 	printInt("random", getRandom(1, 10));
+	// }
+	// getch();
 
 	menuLoop();
 }
