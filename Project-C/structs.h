@@ -14,14 +14,18 @@ typedef struct Timer
 
 typedef struct EventCollection
 {
-	bool onEnemyEmitted;
-	bool onResetMessageEmitted;
+	bool generateEnemyFlag;
+	bool moveEnemyFlag;
+	bool reloadFlag;
+	bool resetMessageFlag;
 } EventCollection;
 
 typedef struct TimerCollection
 {
 	Timer frameTimer;
-	Timer enemyTimer;
+	Timer generateEnemyTimer;
+	Timer moveEnemyTimer;
+	Timer reloadTimer;
 	Timer resetMessageTimer;
 } TimerCollection;
 
@@ -47,6 +51,8 @@ typedef struct Sprite
 
 typedef struct PlayerAttributes
 {
+	int score;
+	int bullets;
 	int xp;
 	int level;
 	int money;
@@ -82,9 +88,9 @@ typedef struct Enemy
 typedef struct Bullet
 {
 	Node bullet;
+	Vector2D direction;
 	int bulletOwner;
 	int bulletDamage;
-	int bulletType;
 } Bullet;
 
 // DATABASE TYPES
@@ -112,10 +118,11 @@ typedef struct LobbyData
 
 typedef struct GameData
 {
+	bool gameOver;
 	Player currentPlayer;
 	Enemy enemies[100];
 	int enemyCount;
-	Node bullets[200];
+	Bullet bullets[200];
 	int bulletCount;
 	char *message;
 	TimerCollection timers;

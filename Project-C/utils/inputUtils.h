@@ -13,7 +13,7 @@ char getKbdInput()
 	}
 	else
 	{
-		return ' ';
+		return '\0';
 	}
 }
 

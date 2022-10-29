@@ -24,6 +24,7 @@
 		"loadgame.h": "c",
 		"lobby.h": "c",
 		"gameutils.h": "c",
-		"game.h": "c"
+		"game.h": "c",
+		"handlers.h": "c"
 	}
 }

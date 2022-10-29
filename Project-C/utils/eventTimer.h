@@ -12,7 +12,7 @@ void setTimerInterval(Timer *timer)
 	timer->msec = (clock() - timer->before) * 1000 / CLOCKS_PER_SEC;
 }
 
-void runEvent(Timer *timer, void (*fn)())
+void runEventCallback(Timer *timer, void (*fn)())
 {
 	if (timer->msec >= timer->delay)
 	{
@@ -21,7 +21,7 @@ void runEvent(Timer *timer, void (*fn)())
 	}
 }
 
-void setEventFlag(Timer *timer, bool *onEventEmitted)
+void setEventCallbackFlag(Timer *timer, bool *onEventEmitted)
 {
 	if (timer->on && timer->msec >= timer->delay)
 	{
