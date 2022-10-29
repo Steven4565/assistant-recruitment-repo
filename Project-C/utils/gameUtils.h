@@ -38,10 +38,10 @@ bool checkNodeCollision(Node node1, Node node2)
 {
 }
 
-bool checkLobbyCollision(int x, int y)
+bool checkBoardCollision(Sprite board, int x, int y)
 {
 
-	if (lobby.sprite[y][x] != ' ')
+	if (board.sprite[y][x] != ' ')
 	{
 		return false;
 	}
@@ -59,6 +59,79 @@ bool checkShops(Vector2D shop, Vector2D player)
 	}
 
 	return false;
+}
+
+void handleMoveVector(char inputChar, Vector2D *inputVector)
+{
+	switch (inputChar)
+	{
+	case 'w':
+		inputVector->x = 0;
+		inputVector->y = -1;
+		return;
+	case 'a':
+		inputVector->x = -1;
+		inputVector->y = 0;
+		return;
+	case 's':
+		inputVector->x = 0;
+		inputVector->y = 1;
+		return;
+	case 'd':
+		inputVector->x = 1;
+		inputVector->y = 0;
+		return;
+	default:
+		return;
+	}
+}
+
+void movePlayer(Sprite board, Vector2D *player, Vector2D input)
+{
+	// check for collission
+	if (checkBoardCollision(board, player->x + input.x, player->y + input.y))
+	{
+		// if no collision, move player
+		player->x += input.x;
+		player->y += input.y;
+	}
+}
+
+bool boardNodeCollided(Sprite board, Node node)
+{
+	for (int i = 0; i < node.h; i++)
+	{
+		for (int j = 0; j < node.w; j++)
+		{
+			if (board.sprite[i + node.pos.y][j + node.pos.x] != ' ')
+				return true;
+		}
+	}
+
+	return false;
+}
+
+void movePlayerNode(Sprite board, Node *playerNode, Vector2D moveVector)
+{
+	// check collision in node
+	for (int i = 0; i < playerNode->h; i++)
+	{
+		for (int j = 0; j < playerNode->w; j++)
+		{
+			Node temp = {.pos.x = playerNode->pos.x + moveVector.x,
+									 .pos.y = playerNode->pos.y + moveVector.y,
+									 .h = playerNode->h,
+									 .w = playerNode->w};
+			if (!boardNodeCollided(board, temp))
+			{
+				playerNode->pos.x += moveVector.x;
+				playerNode->pos.y += moveVector.y;
+				return;
+			}
+		}
+	}
+
+	// if (checkBoardCollision(board, ))
 }
 
 #endif

@@ -79,42 +79,6 @@ void renderLobby(Vector2D player)
 	}
 }
 
-void movePlayer(Vector2D *player, Vector2D input)
-{
-	// check for collission
-	if (checkLobbyCollision(player->x + input.x, player->y + input.y))
-	{
-		// if no collision, move player
-		player->x += input.x;
-		player->y += input.y;
-	}
-}
-
-void handleMoveVector(char inputChar, Vector2D *inputVector)
-{
-	switch (inputChar)
-	{
-	case 'w':
-		inputVector->x = 0;
-		inputVector->y = -1;
-		return;
-	case 'a':
-		inputVector->x = -1;
-		inputVector->y = 0;
-		return;
-	case 's':
-		inputVector->x = 0;
-		inputVector->y = 1;
-		return;
-	case 'd':
-		inputVector->x = 1;
-		inputVector->y = 0;
-		return;
-	default:
-		return;
-	}
-}
-
 void enterItemShop()
 {
 	// TODO: item shop
@@ -186,7 +150,9 @@ void lobbyLoop(int entryIndex)
 		if (inputChar == ' ')
 			handleLobbyInteract(lobbyData.pos, inputChar, &runLobby);
 		// TODO: handle other inputs like backpack, talk
-		movePlayer(&lobbyData.pos, moveVector);
+		movePlayer(lobby, &lobbyData.pos, moveVector);
+		// Node temp = {.pos.x = lobbyData.pos.x, .pos.y = lobbyData.pox.y, .w = 1, .h = 1};
+		// movePlayerNode(lobby, temp, moveVector)
 
 		usleep(10000);
 	}

@@ -33,29 +33,62 @@ void render()
 	}
 }
 
-void handleGameplayInput(char input)
+void handleGameplayInput(char input, Vector2D *moveVector)
 {
+	if (input == ' ')
+		return;
+
+	if (input == 'w' || input == 'a' || input == 's' || input == 'd')
+	{
+		handleMoveVector(input, moveVector);
+		return;
+	}
+
+	switch (input)
+	{
+	case 'g':
+		// TODO: if has bomb, fire onbonb
+		// else: fire onMessage("You don't have any bombs")
+		break;
+	case 'r':
+		break;
+	case 'f':
+		break;
+	case '1':
+		break;
+	case '2':
+		break;
+	case '3':
+		break;
+	case '4':
+		break;
+	default:
+		break;
+	}
 }
 
 void gameLoop()
 {
 	// clear screen
 	clrscr();
+	// render
+	render();
 
 	// get input (if space then no input)
 	char input = getKbdInput();
 
 	// handle input
-	handleGameplayInput(input);
+	Vector2D moveVector = {0, 0};
+	handleGameplayInput(input, &moveVector);
+	// movePlayer(board, &game.currentPlayer.playerNode.pos, moveVector);
+	movePlayerNode(board, &game.currentPlayer.playerNode, moveVector);
+
 	// if bomb => fire onbomb event
 
 	// handle events
 	// moveEnemies();
 	// moveBullets(); // move bullets
 	// checkBullets(); // kill enemy, reduce player health, remove bullets
-
-	// render
-	render();
 }
 
 // Functions
@@ -87,10 +120,8 @@ void startEventLoop()
 	bool endGame = false;
 
 	initGame();
-	printf("%d\n", game.currentPlayer.attributes.xp);
-	getch();
 
-	Timer frame = {clock(), 200, 0};
+	Timer frame = {clock(), 40, 0};
 	Timer enemy = {clock(), 4000, 0};
 	while (!endGame)
 	{
@@ -104,7 +135,7 @@ void startEventLoop()
 		emitEvent(&enemy, &(events.onEnemyEmitted));
 
 		// for optimization
-		usleep(10000);
+		usleep(30000);
 	}
 }
 
