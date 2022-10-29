@@ -3,25 +3,46 @@
 #define GAME_UTILS_H
 
 #include <stdbool.h>
+#include <stdlib.h>
+#include <time.h>
 #include "../structs.h"
 #include "../globals.h"
 
-bool checkCoordInNode(Node node, int x, int y)
-{
-	if (x >= node.pos.x && x <= node.pos.x + node.w - 1 && y >= node.pos.y && y <= node.pos.y + node.h - 1)
-	{
-		return true;
-	}
+// PROTOTYPES
+bool checkCoordInNode(Node node, int x, int y);
+int checkEnemyInCoords(Vector2D coord);
 
-	return false;
-}
-
+// PRINT UTILS
 char getBoardChar(int x, int y)
 {
+	Vector2D coords = {x, y};
+
 	if (checkCoordInNode(game.currentPlayer.playerNode, x, y))
 	{
-		// return player char here
 		return space1.sprite[y - game.currentPlayer.playerNode.pos.y][x - game.currentPlayer.playerNode.pos.x];
+	}
+
+	// return enemy char
+	int result = checkEnemyInCoords(coords);
+	if (result != -1)
+	{
+		Enemy enemy = game.enemies[result];
+		Sprite enemySprite;
+		switch (enemy.enemyType)
+		{
+		case 1:
+			enemySprite = enemy1;
+			break;
+		case 2:
+			enemySprite = enemy2;
+			break;
+		case 3:
+			enemySprite = enemy3;
+			break;
+		}
+
+		Vector2D enemyVec = enemy.enemy.pos;
+		return enemySprite.sprite[y - enemyVec.y][x - enemyVec.x];
 	}
 
 	for (int i = 0; i < game.bulletCount; i++)
@@ -31,16 +52,19 @@ char getBoardChar(int x, int y)
 			return '*';
 		}
 	}
-
-	// if is
-	// 	spaceship return spaceship char
-
-	// 			if is enemy return enemy char
-
-	// 			if is bullet return bullet char
-
-	// 			return board char
 	return board.sprite[y][x];
+}
+
+// COLLISSION DETECTORS
+
+bool checkCoordInNode(Node node, int x, int y)
+{
+	if (x >= node.pos.x && x <= node.pos.x + node.w - 1 && y >= node.pos.y && y <= node.pos.y + node.h - 1)
+	{
+		return true;
+	}
+
+	return false;
 }
 
 bool checkNodeCollision(Node node1, Node node2)
@@ -69,6 +93,20 @@ bool checkShops(Vector2D shop, Vector2D player)
 	return false;
 }
 
+bool boardNodeCollided(Sprite board, Node node)
+{
+	for (int i = 0; i < node.h; i++)
+	{
+		for (int j = 0; j < node.w; j++)
+		{
+			if (board.sprite[i + node.pos.y][j + node.pos.x] != ' ')
+				return true;
+		}
+	}
+
+	return false;
+}
+
 // returns -1 if none is found
 int checkEnemyInCoords(Vector2D coord)
 {
@@ -83,6 +121,8 @@ int checkEnemyInCoords(Vector2D coord)
 	}
 	return -1;
 }
+
+// MOVEMENT
 
 void handleMoveVector(char inputChar, Vector2D *inputVector)
 {
@@ -109,20 +149,6 @@ void handleMoveVector(char inputChar, Vector2D *inputVector)
 	}
 }
 
-bool boardNodeCollided(Sprite board, Node node)
-{
-	for (int i = 0; i < node.h; i++)
-	{
-		for (int j = 0; j < node.w; j++)
-		{
-			if (board.sprite[i + node.pos.y][j + node.pos.x] != ' ')
-				return true;
-		}
-	}
-
-	return false;
-}
-
 void movePlayerNode(Sprite board, Node *playerNode, Vector2D moveVector)
 {
 	// check collision in node
@@ -143,6 +169,8 @@ void movePlayerNode(Sprite board, Node *playerNode, Vector2D moveVector)
 		}
 	}
 }
+
+// GAMEPLAY
 
 void shootBullet(Vector2D startPos, Vector2D direction, int bulletOwner, int bulletDamage)
 {
@@ -195,6 +223,20 @@ void deleteEnemy(int i)
 	}
 
 	game.enemyCount--;
+}
+
+void addEnemy(Enemy enemy)
+{
+	game.enemies[game.enemyCount] = enemy;
+	game.enemyCount++;
+}
+
+// OTHER UTILS
+
+int getRandom(int min, int max)
+{
+	srand(time(NULL));
+	return (rand() % (max - min + 1)) + min;
 }
 
 #endif

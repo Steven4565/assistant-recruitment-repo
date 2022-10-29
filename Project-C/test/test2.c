@@ -1,13 +1,17 @@
 #include <stdio.h>
 #include <conio.h>
+#include <unistd.h>
 
 int main()
 {
-	scanf("%*s");
-	while (!kbhit())
+	for (int i = 0; i < 25; i++)
 	{
-		getch();
-		printf("Press a key\n");
+		for (int j = 0; j < 10; j++)
+		{
+			usleep(100000);
+			printf("%c", 'a');
+		}
+		printf("\n");
 	}
 
 	return 0;

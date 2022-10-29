@@ -86,10 +86,6 @@ void handleMoveBullets()
 	}
 }
 
-void handleGenerateEnemies()
-{
-}
-
 void handleReload()
 {
 	if (!events.reloadFlag)
@@ -101,7 +97,61 @@ void handleReload()
 	deactivateTimer(&game.timers.reloadTimer);
 }
 
+void handleGenerateEnemies()
+{
+	if (!events.generateEnemyFlag)
+		return;
+
+	for (int i = 0; i < game.enemyCount; i++)
+	{
+		if (game.enemies[i].enemy.pos.y >= 21) // Enemy hits bottom border
+		{
+			game.gameOver = true;
+			return;
+		}
+		game.enemies[i].enemy.pos.y += 1;
+	}
+
+	// get random spawn location (top left corner)
+	Vector2D baseSpawn = {.x = getRandom(2, 49 - 2 - 3 + 1),
+												.y = 0};
+
+	for (int i = 0; i < 3; i++)
+	{
+		// add enemy
+		Vector2D moveVector = {.x = (getRandom(1, 2) == 1 ? 1 : -1), .y = 0};
+		Vector2D enemySpawnPos = {.x = 0 + i * 4, .y = 0};
+		Node enemyNode = {.pos = baseSpawn, .w = 3, .h = 1};
+		Enemy enemy = {.enemy = enemyNode, .direction = moveVector, .enemyType = getRandom(1, 3)};
+		addEnemy(enemy);
+	}
+
+	events.generateEnemyFlag = false;
+}
+
 void handleMoveEnemies()
 {
+	if (!events.moveEnemyFlag)
+		return;
+
+	for (int i = 0; i < game.enemyCount; i++)
+	{
+		Vector2D enemyPos = game.enemies[i].enemy.pos;
+		Vector2D enemyMoveVec = game.enemies[i].direction;
+
+		Vector2D dest = {enemyPos.x + enemyMoveVec.x, enemyPos.y + enemyMoveVec.y};
+		game.enemies[i].enemy.pos = dest;
+
+		if (enemyMoveVec.x == -1)
+		{
+			game.enemies[i].direction.x = 1;
+		}
+		else
+		{
+			game.enemies[i].direction.x = -1;
+		}
+	}
+
+	events.moveEnemyFlag = false;
 }
 #endif

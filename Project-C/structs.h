@@ -82,6 +82,7 @@ typedef struct Player
 typedef struct Enemy
 {
 	Node enemy;
+	Vector2D direction;
 	int enemyType;
 } Enemy;
 
