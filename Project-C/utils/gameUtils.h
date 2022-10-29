@@ -28,7 +28,7 @@ char getBoardChar(int x, int y)
 	{
 		Enemy enemy = game.enemies[result];
 		Sprite enemySprite;
-		switch (enemy.enemyType)
+		switch (enemy.damage)
 		{
 		case 1:
 			enemySprite = enemy1;
@@ -45,6 +45,7 @@ char getBoardChar(int x, int y)
 		return enemySprite.sprite[y - enemyVec.y][x - enemyVec.x];
 	}
 
+	// return bullet char
 	for (int i = 0; i < game.bulletCount; i++)
 	{
 		if (checkCoordInNode(game.bullets[i].bullet, x, y))
@@ -174,7 +175,7 @@ void movePlayerNode(Sprite board, Node *playerNode, Vector2D moveVector)
 
 void shootBullet(Vector2D startPos, Vector2D direction, int bulletOwner, int bulletDamage)
 {
-	if (game.currentPlayer.attributes.bullets <= 0)
+	if (bulletOwner == bulletOwner_player && game.currentPlayer.attributes.bullets <= 0)
 	{
 		return;
 	}
@@ -188,7 +189,9 @@ void shootBullet(Vector2D startPos, Vector2D direction, int bulletOwner, int bul
 	game.bullets[game.bulletCount] = temp;
 	game.bulletCount++;
 
-	game.currentPlayer.attributes.bullets--;
+	// only if the player is shooting
+	if (bulletOwner == bulletOwner_player)
+		game.currentPlayer.attributes.bullets--;
 }
 
 void swapBullet(Bullet *bullet1, Bullet *bullet2)

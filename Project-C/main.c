@@ -62,11 +62,5 @@ int main()
 
 	init();
 
-	// for (int i = 0; i < 10; i++)
-	// {
-	// 	printInt("random", getRandom(1, 10));
-	// }
-	// getch();
-
 	menuLoop();
 }

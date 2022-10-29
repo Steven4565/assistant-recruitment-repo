@@ -22,12 +22,24 @@ void render()
 			printf("%c", spriteChar);
 		};
 		// render messages next to board
+		PlayerAttributes attr = game.currentPlayer.attributes;
+		Player player = game.currentPlayer;
+		if (i == 2)
+			printf("\tName: %s", lobbyData.playerData.name);
+		if (i == 3)
+			printf("\tLevel: %d", lobbyData.playerData.level);
+		if (i == 5)
+			printf("\tX: %d | y: %d", player.playerNode.pos.x, player.playerNode.pos.y);
 		if (i == 8)
-			printf("\tScore: %d", game.currentPlayer.attributes.score);
+			printf("\tScore: %d", attr.score);
 		if (i == 9)
-			printf("\tHP: %d", game.currentPlayer.attributes.hp);
+			printf("\tHP: %d/%d", attr.hp, attr.maxHp);
 		if (i == 10)
-			printf("\tBullets: %d", game.currentPlayer.attributes.bullets);
+			printf("\tArmor: %d/%d", attr.armor, attr.maxArmor);
+		if (i == 11)
+			printf("\tEnergy: %.0lf/%.0lf", attr.energy, attr.maxEnergy);
+		if (i == 12)
+			printf("\tBullets: %d/10", attr.bullets);
 
 		if (i == 15)
 			printf("\t%s", game.message);
@@ -45,7 +57,7 @@ void handleShoot()
 
 void handleSkill()
 {
-	if (game.currentPlayer.attributes.bullets < 3)
+	if (game.currentPlayer.attributes.bullets < 3 && game.currentPlayer.attributes.energy > 30)
 		return;
 
 	Vector2D startPos = {.x = game.currentPlayer.playerNode.pos.x + 2, .y = game.currentPlayer.playerNode.pos.y - 1};
@@ -55,6 +67,8 @@ void handleSkill()
 	shootBullet(startPos, bulletDir1, bulletOwner_player, 1);
 	shootBullet(startPos, bulletDir2, bulletOwner_player, 1);
 	shootBullet(startPos, bulletDir3, bulletOwner_player, 1);
+
+	game.currentPlayer.attributes.energy -= 30;
 }
 
 void handleGameplayInput(char input, Vector2D *moveVector)
@@ -100,13 +114,14 @@ void handleGameplayInput(char input, Vector2D *moveVector)
 
 void initGame()
 {
-	Node playerNode = {{5, 5}, 5, 5};
+	Node playerNode = {{23, 15}, 5, 5};
 	PlayerEntry currentPlayer = lobbyData.playerData;
 	PlayerAttributes attr = {.bullets = 0,
 													 .xp = currentPlayer.xp,
 													 .level = currentPlayer.level,
 													 .money = currentPlayer.money,
 													 .hp = currentPlayer.hp,
+													 .energy = currentPlayer.energy,
 													 .armor = currentPlayer.armor,
 													 .maxHp = currentPlayer.hp,
 													 .maxEnergy = currentPlayer.energy,
@@ -127,13 +142,15 @@ void initGame()
 	Timer frameTimer = {clock(), 40, 0, true};
 	Timer generateEnemyTimer = {clock(), 4000, 0, true};
 	Timer moveEnemyTimer = {clock(), 3000, 0, true};
-	Timer reloadTimer = {NULL, 1000, 0, false};
-	Timer resetMessageTimer = {NULL, 1000, 0, false};
+	Timer reloadTimer = {clock(), 1000, 0, false};
+	Timer resetMessageTimer = {clock(), 1000, 0, false};
+	Timer enemyShootTimer = {clock(), 3000 + getRandom(0, 1000), 0, true};
 	timers->frameTimer = frameTimer;
 	timers->generateEnemyTimer = generateEnemyTimer;
 	timers->moveEnemyTimer = moveEnemyTimer;
 	timers->reloadTimer = reloadTimer;
 	timers->resetMessageTimer = resetMessageTimer;
+	timers->enemyShootTimer = enemyShootTimer;
 
 	game.message = "";
 	game.gameOver = false;
@@ -155,8 +172,10 @@ void gameLoop()
 	handleMessageReset();
 	handleGenerateEnemies();
 	handleMoveEnemies();
+	handleEnemyShoot();
 	handleReload();
 	handleMoveBullets();
+	game.currentPlayer.attributes.energy += 0.1;
 }
 
 void startEventLoop()
@@ -171,6 +190,7 @@ void startEventLoop()
 		setTimerInterval(&game.timers.moveEnemyTimer);
 		setTimerInterval(&game.timers.reloadTimer);
 		setTimerInterval(&game.timers.resetMessageTimer);
+		setTimerInterval(&game.timers.enemyShootTimer);
 
 		// turns the bool on when msec > delay, resets msec
 		runEventCallback(&game.timers.frameTimer, &gameLoop);
@@ -178,6 +198,7 @@ void startEventLoop()
 		setEventCallbackFlag(&game.timers.moveEnemyTimer, &events.moveEnemyFlag);
 		setEventCallbackFlag(&game.timers.reloadTimer, &events.reloadFlag);
 		setEventCallbackFlag(&game.timers.resetMessageTimer, &events.resetMessageFlag);
+		setEventCallbackFlag(&game.timers.enemyShootTimer, &events.enemyShootFlag);
 
 		// for optimization
 		usleep(20000);

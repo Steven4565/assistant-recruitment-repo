@@ -65,6 +65,7 @@ void handleMoveBullets()
 				{
 					game.gameOver = true;
 				}
+				deleteBullet(i);
 			}
 			break;
 		case bulletOwner_player:
@@ -113,7 +114,7 @@ void handleGenerateEnemies()
 	}
 
 	// get random spawn location (top left corner)
-	Vector2D baseSpawn = {.x = getRandom(4, 49 - 2 - 3 + 1),
+	Vector2D baseSpawn = {.x = getRandom(4, 49 - 2 - 11 + 1),
 												.y = 0};
 	Vector2D moveVector = {.x = (getRandom(1, 2) == 1 ? 1 : -1), .y = 0};
 
@@ -122,7 +123,7 @@ void handleGenerateEnemies()
 		// add enemy
 		Vector2D enemySpawnPos = {.x = baseSpawn.x + i * 4, .y = baseSpawn.y};
 		Node enemyNode = {.pos = enemySpawnPos, .w = 3, .h = 1};
-		Enemy enemy = {.enemy = enemyNode, .direction = moveVector, .enemyType = getRandom(1, 3)};
+		Enemy enemy = {.enemy = enemyNode, .direction = moveVector, .damage = getRandom(1, 3)};
 		addEnemy(enemy);
 	}
 
@@ -154,4 +155,24 @@ void handleMoveEnemies()
 
 	events.moveEnemyFlag = false;
 }
+
+void handleEnemyShoot()
+{
+	if (!events.enemyShootFlag)
+		return;
+
+	// shoot bullets from enemies
+	for (int i = 0; i < game.enemyCount; i++)
+	{
+		Vector2D startPos = game.enemies[i].enemy.pos;
+		startPos.x++; // 1 unit away from the corner left
+
+		Vector2D direction = {.x = 0, .y = 1};
+		shootBullet(startPos, direction, bulletOwner_enemy, game.enemies[i].damage);
+	}
+
+	game.timers.enemyShootTimer.delay = 3000 + getRandom(0, 1000);
+	events.enemyShootFlag = false;
+}
+
 #endif

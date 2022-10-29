@@ -18,6 +18,7 @@ typedef struct EventCollection
 	bool moveEnemyFlag;
 	bool reloadFlag;
 	bool resetMessageFlag;
+	bool enemyShootFlag;
 } EventCollection;
 
 typedef struct TimerCollection
@@ -27,6 +28,7 @@ typedef struct TimerCollection
 	Timer moveEnemyTimer;
 	Timer reloadTimer;
 	Timer resetMessageTimer;
+	Timer enemyShootTimer;
 } TimerCollection;
 
 typedef struct Vector2D
@@ -83,7 +85,7 @@ typedef struct Enemy
 {
 	Node enemy;
 	Vector2D direction;
-	int enemyType;
+	int damage;
 } Enemy;
 
 typedef struct Bullet
@@ -121,9 +123,9 @@ typedef struct GameData
 {
 	bool gameOver;
 	Player currentPlayer;
-	Enemy enemies[100];
+	Enemy enemies[500];
 	int enemyCount;
-	Bullet bullets[200];
+	Bullet bullets[1000];
 	int bulletCount;
 	char *message;
 	TimerCollection timers;
