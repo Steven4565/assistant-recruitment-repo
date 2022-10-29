@@ -6,8 +6,23 @@
 #include "../structs.h"
 #include "../globals.h"
 
-char getBoardChar(Vector2D position)
+bool checkCoordInNode(Node node, int x, int y)
 {
+	if (x >= node.pos.x && x <= node.pos.x + node.w - 1 && y >= node.pos.y && y <= node.pos.y + node.h - 1)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+char getBoardChar(int x, int y)
+{
+	if (checkCoordInNode(game.currentPlayer.playerNode, x, y))
+	{
+		// return player char here
+		return space1.sprite[y - game.currentPlayer.playerNode.pos.y][x - game.currentPlayer.playerNode.pos.x];
+	}
 	// if is
 	// 	spaceship return spaceship char
 
@@ -16,6 +31,11 @@ char getBoardChar(Vector2D position)
 	// 			if is bullet return bullet char
 
 	// 			return board char
+	return board.sprite[y][x];
+}
+
+bool checkNodeCollision(Node node1, Node node2)
+{
 }
 
 bool checkLobbyCollision(int x, int y)

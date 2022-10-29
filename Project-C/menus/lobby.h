@@ -8,10 +8,10 @@
 #include "../utils/eventTimer.h"
 #include "../events/eventStruct.h"
 #include "../events/events.h"
-#include "../globals.h"
 #include "../utils/printUtils.h"
 #include "../utils/inputUtils.h"
 #include "../utils/gameUtils.h"
+#include "game.h"
 
 char *getLobbyMessage(Vector2D player)
 {
@@ -115,6 +115,16 @@ void handleMoveVector(char inputChar, Vector2D *inputVector)
 	}
 }
 
+void enterItemShop()
+{
+	// TODO: item shop
+}
+
+void enterUpgradeShop()
+{
+	// TODO: upgrade shop
+}
+
 void handleLobbyInteract(Vector2D player, char inputChar, bool *runLobby)
 {
 	int x = player.x;
@@ -122,12 +132,12 @@ void handleLobbyInteract(Vector2D player, char inputChar, bool *runLobby)
 
 	if (checkShops(lobbyShop, player))
 	{
-		// TODO: loop lobby shop
+		enterItemShop();
 	}
 
 	if (checkShops(lobbyUpgrade, player))
 	{
-		// TODO: loop lobby upgrade
+		enterUpgradeShop();
 	}
 
 	if (x == 5 && (y >= 9 && y <= 11))
@@ -142,17 +152,21 @@ void handleLobbyInteract(Vector2D player, char inputChar, bool *runLobby)
 
 	if (x == 17 && y == 10)
 	{
-		// TODO: start game
+		startEventLoop();
 	}
+}
+
+void initLobby()
+{
+	lobbyData.playerData = currentPlayer;
 }
 
 void lobbyLoop()
 {
 	bool runLobby = true;
 	Vector2D player = {17, 19};
-
-	// create game data here? pass to handleLobbyInteract
-	GameData game;
+	// TODO: initialize lobby here?
+	initLobby();
 
 	renderLobby(player);
 
@@ -168,6 +182,7 @@ void lobbyLoop()
 		// check for space (interact)
 		if (inputChar == ' ')
 			handleLobbyInteract(player, inputChar, &runLobby);
+		// TODO: handle other inputs like backpack, talk
 		movePlayer(&player, moveVector);
 
 		usleep(10000);

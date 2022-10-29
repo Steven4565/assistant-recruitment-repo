@@ -27,7 +27,6 @@ typedef struct PlayerAttributes
 	int xp;
 	int level;
 	int money;
-	char symbol;
 	int hp;
 	double energy;
 	int armor;
@@ -47,10 +46,8 @@ typedef struct Backpack
 
 typedef struct Player
 {
-	char *name;
 	Node playerNode;
 	PlayerAttributes attributes;
-	Backpack backpack;
 } Player;
 
 typedef struct Enemy
@@ -83,12 +80,19 @@ typedef struct PlayerEntry
 
 // Global game data
 
+typedef struct LobbyData
+{
+	PlayerEntry playerData;
+	Vector2D pos;
+	Backpack backpack;
+} LobbyData;
+
 typedef struct GameData
 {
 	Player currentPlayer;
-	Enemy *enemies;
+	Enemy enemies[100];
 	int enemyCount;
-	Node *bullets;
+	Node bullets[200];
 	int bulletCount;
 } GameData;
 
