@@ -3,16 +3,12 @@
 
 #include <time.h>
 #include <stdbool.h>
-
-typedef struct Timer
-{
-	clock_t before;
-	int delay;
-	int msec;
-} Timer;
+#include "../globals.h"
 
 void setTimerInterval(Timer *timer)
 {
+	if (!timer->on)
+		return;
 	timer->msec = (clock() - timer->before) * 1000 / CLOCKS_PER_SEC;
 }
 
@@ -25,9 +21,9 @@ void runEvent(Timer *timer, void (*fn)())
 	}
 }
 
-void emitEvent(Timer *timer, bool *onEventEmitted)
+void setEventFlag(Timer *timer, bool *onEventEmitted)
 {
-	if (timer->msec >= timer->delay)
+	if (timer->on && timer->msec >= timer->delay)
 	{
 		timer->before = clock();
 		*onEventEmitted = true;

@@ -2,6 +2,29 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
 
+#include <stdbool.h>
+
+typedef struct Timer
+{
+	clock_t before;
+	int delay;
+	int msec;
+	bool on;
+} Timer;
+
+typedef struct EventCollection
+{
+	bool onEnemyEmitted;
+	bool onResetMessageEmitted;
+} EventCollection;
+
+typedef struct TimerCollection
+{
+	Timer frameTimer;
+	Timer enemyTimer;
+	Timer resetMessageTimer;
+} TimerCollection;
+
 typedef struct Vector2D
 {
 	int x;
@@ -94,6 +117,8 @@ typedef struct GameData
 	int enemyCount;
 	Node bullets[200];
 	int bulletCount;
+	char *message;
+	TimerCollection timers;
 } GameData;
 
 #endif

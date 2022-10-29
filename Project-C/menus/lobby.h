@@ -6,8 +6,6 @@
 #include <unistd.h>
 #include "../globals.h"
 #include "../utils/eventTimer.h"
-#include "../events/eventStruct.h"
-#include "../events/events.h"
 #include "../utils/printUtils.h"
 #include "../utils/inputUtils.h"
 #include "../utils/gameUtils.h"

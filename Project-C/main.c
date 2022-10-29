@@ -11,9 +11,7 @@
 #include "utils/fileUtils.h"
 #include "utils/eventTimer.h"
 
-#include "events/eventStruct.h"
-#include "events/events.h"
-#include "events/handlers/enemyHandler.h"
+#include "events/handlers.h"
 
 #include "menus/mainMenu.h"
 

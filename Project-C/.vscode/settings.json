@@ -19,6 +19,11 @@
 		"events.c": "cpp",
 		"globals.c": "cpp",
 		"malloc.h": "c",
-		"variant": "c"
+		"variant": "c",
+		"time.h": "c",
+		"loadgame.h": "c",
+		"lobby.h": "c",
+		"gameutils.h": "c",
+		"game.h": "c"
 	}
 }

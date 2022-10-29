@@ -5,17 +5,14 @@
 #include <stdio.h>
 #include <unistd.h>
 #include "../utils/eventTimer.h"
-#include "../events/eventStruct.h"
-#include "../events/events.h"
 #include "../globals.h"
 #include "../utils/printUtils.h"
 #include "../utils/inputUtils.h"
 #include "../utils/gameUtils.h"
-#include "../events/handlers/enemyHandler.h"
+#include "../events/handlers.h"
 
 void render()
 {
-	char *message = "";
 	clrscr();
 	for (int i = 0; i < board.h; i++)
 	{
@@ -27,7 +24,7 @@ void render()
 		// render messages next to board
 		if (i == 15)
 		{
-			printf("\t%s", message);
+			printf("\t%s", game.message);
 		}
 		puts("");
 	}
@@ -67,31 +64,6 @@ void handleGameplayInput(char input, Vector2D *moveVector)
 	}
 }
 
-void gameLoop()
-{
-	// clear screen
-	clrscr();
-	// render
-	render();
-
-	// get input (if space then no input)
-	char input = getKbdInput();
-
-	// handle input
-	Vector2D moveVector = {0, 0};
-	handleGameplayInput(input, &moveVector);
-	movePlayerNode(board, &game.currentPlayer.playerNode, moveVector);
-
-	// if bomb => fire onbomb event
-
-	// handle events
-	// moveEnemies();
-	// moveBullets(); // move bullets
-	// checkBullets(); // kill enemy, reduce player health, remove bullets
-}
-
-// Functions
-
 void initGame()
 {
 	Node playerNode = {{5, 5}, 5, 5};
@@ -112,6 +84,36 @@ void initGame()
 	game.enemyCount = 0;
 	game.bulletCount = 0;
 	game.currentPlayer = player;
+
+	Timer frameTimer = {clock(), 40, 0, true};
+	Timer enemyTimer = {clock(), 4000, 0, true};
+	Timer resetMessageTimer = {clock(), 1000, 0, false};
+	game.timers.frameTimer = frameTimer;
+	game.timers.enemyTimer = enemyTimer;
+	game.timers.resetMessageTimer = resetMessageTimer;
+
+	game.message = "";
+}
+
+void gameLoop()
+{
+	// Render
+	clrscr();
+	render();
+
+	// Get input (if space then no input)
+	char input = getKbdInput();
+	Vector2D moveVector = {0, 0};
+	handleGameplayInput(input, &moveVector);
+	movePlayerNode(board, &game.currentPlayer.playerNode, moveVector);
+
+	// if bomb => fire emit onBomb event
+
+	// HANDLE EVENTS (handle only if the flag is on, then turn flag off)
+	handleMessageReset();
+	// moveEnemies();
+	// moveBullets(); // move bullets
+	// checkBullets(); // kill enemyTimer, reduce player health, remove bullets
 }
 
 void startEventLoop()
@@ -119,22 +121,20 @@ void startEventLoop()
 	bool endGame = false;
 
 	initGame();
-
-	Timer frame = {clock(), 40, 0};
-	Timer enemy = {clock(), 4000, 0};
 	while (!endGame)
 	{
-		setTimerInterval(&frame);
-		setTimerInterval(&enemy);
+		// updates timer msec
+		setTimerInterval(&game.timers.frameTimer);
+		setTimerInterval(&game.timers.enemyTimer);
+		setTimerInterval(&game.timers.resetMessageTimer);
 
-		// MAIN LOOP
-		runEvent(&frame, &gameLoop);
-
-		// EMIT EVENTS
-		emitEvent(&enemy, &(events.onEnemyEmitted));
+		// turns the bool on when msec > delay, resets msec
+		runEvent(&game.timers.frameTimer, &gameLoop);
+		setEventFlag(&game.timers.enemyTimer, &events.onEnemyEmitted);
+		setEventFlag(&game.timers.enemyTimer, &events.onResetMessageEmitted);
 
 		// for optimization
-		usleep(30000);
+		usleep(20000);
 	}
 }
 
