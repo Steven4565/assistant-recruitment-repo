@@ -33,7 +33,7 @@ void render()
 		if (i == 8)
 			printf("\tScore: %d", attr.score);
 		if (i == 9)
-			printf("\tHP: %d/%d", attr.hp, attr.maxHp);
+			printf("\t[HP: %d/%d]", attr.hp, attr.maxHp);
 		if (i == 10)
 			printf("\tArmor: %d/%d", attr.armor, attr.maxArmor);
 		if (i == 11)
@@ -57,7 +57,7 @@ void handleShoot()
 
 void handleSkill()
 {
-	if (game.currentPlayer.attributes.bullets < 3 && game.currentPlayer.attributes.energy > 30)
+	if (game.currentPlayer.attributes.bullets < 3 || game.currentPlayer.attributes.energy < 30)
 		return;
 
 	Vector2D startPos = {.x = game.currentPlayer.playerNode.pos.x + 2, .y = game.currentPlayer.playerNode.pos.y - 1};
@@ -133,14 +133,16 @@ void initGame()
 	};
 
 	game.enemyCount = 0;
+	game.enemyIndex = 0;
 	game.bulletCount = 0;
+	game.bulletIndex = 0;
 	game.currentPlayer = player;
 
 	game.currentPlayer.attributes.bullets = 10;
 
 	TimerCollection *timers = &game.timers;
 	Timer frameTimer = {clock(), 40, 0, true};
-	Timer generateEnemyTimer = {clock(), 4000, 0, true};
+	Timer generateEnemyTimer = {clock(), 6000, 0, true};
 	Timer moveEnemyTimer = {clock(), 3000, 0, true};
 	Timer reloadTimer = {clock(), 1000, 0, false};
 	Timer resetMessageTimer = {clock(), 1000, 0, false};
@@ -175,7 +177,8 @@ void gameLoop()
 	handleEnemyShoot();
 	handleReload();
 	handleMoveBullets();
-	game.currentPlayer.attributes.energy += 0.1;
+	if (game.currentPlayer.attributes.energy < game.currentPlayer.attributes.maxEnergy)
+		game.currentPlayer.attributes.energy += 0.1;
 }
 
 void startEventLoop()

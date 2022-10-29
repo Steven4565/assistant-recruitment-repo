@@ -30,13 +30,13 @@ char getBoardChar(int x, int y)
 		Sprite enemySprite;
 		switch (enemy.damage)
 		{
-		case 1:
+		case 10:
 			enemySprite = enemy1;
 			break;
-		case 2:
+		case 20:
 			enemySprite = enemy2;
 			break;
-		case 3:
+		case 30:
 			enemySprite = enemy3;
 			break;
 		}
@@ -50,7 +50,12 @@ char getBoardChar(int x, int y)
 	{
 		if (checkCoordInNode(game.bullets[i].bullet, x, y))
 		{
-			return '*';
+			Bullet bullet = game.bullets[i];
+			if (bullet.bulletOwner == bulletOwner_enemy) {
+				return '*';
+			} else if (bullet.bulletOwner == bulletOwner_player) {
+				return '^';
+			}
 		}
 	}
 	return board.sprite[y][x];
@@ -185,9 +190,11 @@ void shootBullet(Vector2D startPos, Vector2D direction, int bulletOwner, int bul
 								 .bullet.w = 1,
 								 .direction = direction,
 								 .bulletOwner = bulletOwner,
-								 .bulletDamage = bulletDamage};
+								 .bulletDamage = bulletDamage,
+								 .index = game.bulletIndex};
 	game.bullets[game.bulletCount] = temp;
 	game.bulletCount++;
+	game.bulletIndex++;
 
 	// only if the player is shooting
 	if (bulletOwner == bulletOwner_player)
@@ -201,9 +208,9 @@ void swapBullet(Bullet *bullet1, Bullet *bullet2)
 	*bullet2 = temp;
 }
 
-void deleteBullet(int i)
+void deleteBullet(int index)
 {
-	for (int i = i; i < game.bulletCount - 1; i++)
+	for (int i = index; i < game.bulletCount - 1; i++)
 	{
 		swapBullet(&game.bullets[i], &game.bullets[i + 1]);
 	}
@@ -218,9 +225,9 @@ void swapEnemy(Enemy *enemy1, Enemy *enemy2)
 	*enemy2 = temp;
 }
 
-void deleteEnemy(int i)
+void deleteEnemy(int index)
 {
-	for (int i = i; i < game.enemyCount - 1; i++)
+	for (int i = index; i < game.enemyCount - 1; i++)
 	{
 		swapEnemy(&game.enemies[i], &game.enemies[i + 1]);
 	}
@@ -232,6 +239,7 @@ void addEnemy(Enemy enemy)
 {
 	game.enemies[game.enemyCount] = enemy;
 	game.enemyCount++;
+	game.enemyIndex++;
 }
 
 // OTHER UTILS

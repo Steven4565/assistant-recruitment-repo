@@ -86,6 +86,7 @@ typedef struct Enemy
 	Node enemy;
 	Vector2D direction;
 	int damage;
+	int index;
 } Enemy;
 
 typedef struct Bullet
@@ -94,6 +95,7 @@ typedef struct Bullet
 	Vector2D direction;
 	int bulletOwner;
 	int bulletDamage;
+	int index;
 } Bullet;
 
 // DATABASE TYPES
@@ -125,8 +127,10 @@ typedef struct GameData
 	Player currentPlayer;
 	Enemy enemies[500];
 	int enemyCount;
+	int enemyIndex;
 	Bullet bullets[1000];
 	int bulletCount;
+	int bulletIndex;
 	char *message;
 	TimerCollection timers;
 } GameData;

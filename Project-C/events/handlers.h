@@ -66,21 +66,22 @@ void handleMoveBullets()
 					game.gameOver = true;
 				}
 				deleteBullet(i);
+				return;
 			}
 			break;
 		case bulletOwner_player:
 		{
 			int result = checkEnemyInCoords(destVector);
+			
 			if (result != -1)
 			{
 				deleteBullet(i);
 				deleteEnemy(result);
 				game.currentPlayer.attributes.score += 10;
+				return;
 			}
 			break;
 		}
-		default:
-			break;
 		}
 
 		game.bullets[i].bullet.pos = destVector;
@@ -114,8 +115,7 @@ void handleGenerateEnemies()
 	}
 
 	// get random spawn location (top left corner)
-	Vector2D baseSpawn = {.x = getRandom(4, 49 - 2 - 11 + 1),
-												.y = 0};
+	Vector2D baseSpawn = {.x = getRandom(4, 49 - 2 - 11 + 1), .y = 0};
 	Vector2D moveVector = {.x = (getRandom(1, 2) == 1 ? 1 : -1), .y = 0};
 
 	for (int i = 0; i < 3; i++)
@@ -123,7 +123,7 @@ void handleGenerateEnemies()
 		// add enemy
 		Vector2D enemySpawnPos = {.x = baseSpawn.x + i * 4, .y = baseSpawn.y};
 		Node enemyNode = {.pos = enemySpawnPos, .w = 3, .h = 1};
-		Enemy enemy = {.enemy = enemyNode, .direction = moveVector, .damage = getRandom(1, 3)};
+		Enemy enemy = {.enemy = enemyNode, .direction = moveVector, .damage = getRandom(1, 3) * 10, .index = game.enemyIndex};
 		addEnemy(enemy);
 	}
 

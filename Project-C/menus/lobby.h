@@ -65,14 +65,16 @@ void renderLobby(Vector2D player)
 			printf("%c", spriteChar);
 		};
 		// render messages next to board
-		if (i == 10)
-		{
+		if (i==7)
+			printf("\t[%s]", lobbyData.playerData.name);
+		if (i==8)
+			printf("\tLevel : %d", lobbyData.playerData.level);
+		if (i==9)
+			printf("\tMoney : %d", lobbyData.playerData.money);
+		if (i == 12)
 			printf("\tPlayer: %d, %d", player.x, player.y);
-		}
 		else if (i == 15)
-		{
 			printf("\t%s", message);
-		}
 		puts("");
 	}
 }
