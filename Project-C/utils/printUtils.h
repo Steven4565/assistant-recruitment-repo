@@ -22,9 +22,9 @@ void printMenu(int selection, char **strArr, int arrLength)
 {
 	for (int i = 0; i < arrLength; i++)
 	{
-		printf("%s\t%c\n", strArr[i], (selection == i ? '<' : ' '));
+		printf("%-25s%c\n", strArr[i], (selection == i ? '<' : ' '));
 	}
-	printf("Exit\t\t%c\n", (selection == arrLength ? '<' : ' '));
+	printf("%-25s%c\n", "Exit", (selection == arrLength ? '<' : ' '));
 }
 
 #endif

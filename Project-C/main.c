@@ -38,6 +38,7 @@ void init()
 	lobby.sprite[lobbyUpgrade.y][lobbyUpgrade.x] = 'U';
 
 	// Load player data from database
+	sortLeaderboard();
 	loadDatabase();
 
 	srand(time(NULL));

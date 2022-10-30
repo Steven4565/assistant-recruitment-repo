@@ -87,6 +87,67 @@ void loadDatabase()
 	fclose(handle);
 }
 
+void sortLeaderboard()
+{
+	FILE *handle = fopen("./database/score.dat", "r");
+	char name[100][50];
+	int score[100];
+	int count = 0;
+	while (fscanf(handle, "%[^#]#%d\n", &name[count], &score[count]) != EOF)
+	{
+		count++;
+	}
+
+	if (DEBUG)
+	{
+		for (int i = 0; i < count; i++)
+		{
+			printf("%-15s | %d\n", name[i], score[i]);
+		}
+		getch();
+	}
+
+	for (int i = 0; i < count - 1; i++)
+	{
+		for (int j = i; j < count - 1; j++)
+		{
+			if (score[j] < score[j + 1])
+			{
+				// swap entries
+				char temp[50];
+				strcpy(temp, name[j]);
+				int tempScore = score[j];
+
+				strcpy(name[j], name[j + 1]);
+				score[j] = score[j + 1];
+
+				strcpy(name[j + 1], temp);
+				score[j + 1] = tempScore;
+			}
+		}
+	}
+
+	if (DEBUG)
+	{
+		for (int i = 0; i < count; i++)
+		{
+			printf("%-15s | %d\n", name[i], score[i]);
+		}
+		getch();
+	}
+
+	fclose(handle);
+
+	// Rewrite to sorted list
+	handle = fopen("./database/score.dat", "w");
+	for (int i = 0; i < count; i++)
+	{
+		fprintf(handle, "%s#%d\n", name[i], score[i]);
+	}
+
+	fclose(handle);
+}
+
 void getLeaderboard()
 {
 	clrscr();
@@ -94,10 +155,10 @@ void getLeaderboard()
 	FILE *handle = fopen("./database/score.dat", "r");
 	char name[50];
 	int score;
-	printf("Name | Score\n");
+	printf("%-15s | %s\n", "Name", "Score");
 	while (fscanf(handle, "%[^#]#%d\n", &name, &score) != EOF)
 	{
-		printf("%s | %d\n", name, score);
+		printf("%-15s | %d\n", name, score);
 	}
 	puts("Press any key to continue");
 	getch();

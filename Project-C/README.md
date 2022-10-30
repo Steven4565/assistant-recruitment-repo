@@ -8,14 +8,17 @@ activateTimer() is the equivalent of setInterval in JS but the callback is hardc
 * `events/`: event(ish) emitters and handlers
 * `globals.c`: definition of global variables
 
-Todo list:
+## Todo list:
 * Choose spaceship feature
-* Update database on exit lobby
+* On gameover:
+	* write score to scoreboard
+	* display gameOver message
+	* add xp
+	* handle level, xp/100 = level
+	* resave as in `player.dat`
+		* cache all the data in `player.dat` in an array
+		* rewrite data
 * Input buffer for cheatcode
-* Item shop
-* Upgrade shop
-* View backpack
-* Sort leaderboard
 * add bomb
 * Handle potions
 * Armor (how does armor work???)
