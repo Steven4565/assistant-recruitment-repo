@@ -56,12 +56,11 @@ int main()
 		{
 			perror("getcwd() error");
 		}
-		// puts(cwd);
-		// getchar();
+		puts(cwd);
+		getchar();
 	}
 
 	init();
-
 
 	menuLoop();
 }

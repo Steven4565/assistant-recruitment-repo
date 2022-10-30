@@ -1,6 +1,22 @@
 Don't forget to set this directory as the `Current Working Directory` or else the fread() will use the wrong directory.
 
-Each screen is handled by a loop. There's the main menu loop, load game loop, lobby loop, and game loop.
+gameplay is handled by some jank version of an event system, based on timers and flags.
+activateTimer() is the equivalent of setInterval in JS but the callback is hardcoded
 
-There're also some kind of janky event loop systems which you can fire and catch events that I made
-Source code for event system can be seen in `events/` folder and `utils/eventTimer.h`
+* `structs.h`: definitions for struct types
+* `utils/`: various utilities
+* `events/`: event(ish) emitters and handlers
+* `globals.c`: definition of global variables
+
+Todo list:
+* Choose spaceship feature
+* Update database on exit lobby
+* Input buffer for cheatcode
+* Item shop
+* Upgrade shop
+* View backpack
+* Sort leaderboard
+* add bomb
+* Handle potions
+* Armor (how does armor work???)
+* Add colors
