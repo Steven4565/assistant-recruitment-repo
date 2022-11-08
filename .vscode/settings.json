@@ -1,10 +1,18 @@
 {
-    "files.associations": {
-        "system_error": "c",
-        "array": "c",
-        "functional": "c",
-        "tuple": "c",
-        "type_traits": "c",
-        "utility": "c"
-    }
+  "files.associations": {
+    "system_error": "c",
+    "array": "c",
+    "functional": "c",
+    "tuple": "c",
+    "type_traits": "c",
+    "utility": "c",
+    "globals.c": "cpp",
+    "globals.h": "c",
+    "inpututils.h": "c",
+    "validators.h": "c",
+    "utils.h": "c",
+    "clientpage.h": "c",
+    "mainpage.h": "c",
+    "table.h": "c"
+  }
 }
