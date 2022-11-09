@@ -6,6 +6,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include "outputUtils.h"
+#include "validators.h"
 
 void getEnter()
 {
@@ -23,13 +24,29 @@ bool getInputString(char *message, bool (*validator)(char *), char *input)
 	} while (!validator(input));
 }
 
-bool getInputRange(char **menus, int menusLength, int min, int max, int *input)
+bool getInputRange(char **menus, int menusLength, int min, int max, bool withZero, int *input)
 {
 	do
 	{
-		printMenus(menus, menusLength);
+		(withZero ? printMenusWith0(menus, menusLength) : printMenus(menus, menusLength));
 		scanf("%d%*c", input);
 	} while ((*input) < min || (*input) > max);
+}
+
+bool getInputInt(char *message, bool (*validator)(int), int *input)
+{
+	do
+	{
+		char temp[50];
+		do
+		{
+			printf("%s: ", message);
+			scanf("%[^\n]%*c", temp);
+
+		} while (!intValidator(temp));
+		*input = atoi(temp);
+
+	} while (!validator(*input));
 }
 
 #endif

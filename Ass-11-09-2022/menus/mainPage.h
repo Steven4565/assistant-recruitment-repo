@@ -12,6 +12,8 @@
 #include "../utils/utils.h"
 #include "../utils/gameUtils.h"
 
+#include "../dataStructures/hashTable.h"
+
 void insert()
 {
 	char name[100];
@@ -29,15 +31,32 @@ void insert()
 
 	printf("\nhash key: %d\n", getHash(code));
 
+	pushHashTable(hashTable, name, age, weight, gender, code);
 	puts("Successfully inserted");
 	getEnter();
 }
 
 void view()
 {
+	printf("| %-25s | %-5s | %-7s | %-10s | %-15s |\n", "Name", "Age", "Weight", "Gender", "Code");
+	printf("------------------------------------------------------------------------------\n");
+	printHashTable(hashTable);
+	getEnter();
 }
 void delete ()
 {
+	printf("| %-25s | %-5s | %-7s | %-10s | %-15s |\n", "Name", "Age", "Weight", "Gender", "Code");
+	printf("------------------------------------------------------------------------------\n");
+	printHashTable(hashTable);
+	puts("Enter the code you want to delete");
+
+	char code[50];
+	getInputString("Enter the code you want to delete", codeValidator, code);
+
+	popHashTable(hashTable, code);
+
+	puts("Successfully deleted entry");
+	getEnter();
 }
 
 bool menuPage()
@@ -48,7 +67,7 @@ bool menuPage()
 
 	char *menus[] = {"Insert membership", "View membership", "Delete membership", "Exit"};
 	int input;
-	getInputRange(menus, 4, 1, 4, &input);
+	getInputRange(menus, 4, 1, 4, false, &input);
 
 	if (input == 4)
 		return false;

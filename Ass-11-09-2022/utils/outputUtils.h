@@ -19,4 +19,13 @@ void printMenus(char **options, int length)
 	}
 }
 
+void printMenusWith0(char **options, int length)
+{
+	for (int i = 0; i < length; i++)
+	{
+		printf("%d. ", i);
+		puts(options[i]);
+	}
+}
+
 #endif
