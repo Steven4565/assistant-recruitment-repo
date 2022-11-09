@@ -33,36 +33,39 @@ void insert()
 	getEnter();
 }
 
-void view()
+void login()
 {
 }
-void delete ()
+
+void regist()
 {
 }
 
 bool menuPage()
 {
 	clrscr();
-	puts("BSGYM");
+	puts("filMZ");
 	puts("===========");
 
-	char *menus[] = {"Insert membership", "View membership", "Delete membership", "Exit"};
+	char *menus[] = {
+			"Exit",
+			"Login",
+			"Register",
+	};
 	int input;
-	getInputRange(menus, 4, 1, 4, &input);
+	getInputRange(menus, 3, 0, 2, true, &input);
 
-	if (input == 4)
+	// Exit Program
+	if (input == 0)
 		return false;
 
 	switch (input)
 	{
 	case 1:
-		insert();
+		login();
 		break;
 	case 2:
-		view();
-		break;
-	case 3:
-		delete ();
+		regist();
 		break;
 	default:
 		break;

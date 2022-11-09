@@ -12,6 +12,17 @@ bool validateMenu(char *input)
 		return false;
 }
 
+bool intValidator(char *input)
+{
+	if (!isNumber(input))
+	{
+		puts("Please input a number");
+		return false;
+	}
+
+	return true;
+}
+
 bool nameValidator(char *name)
 {
 	if (strlen(name) >= 2)

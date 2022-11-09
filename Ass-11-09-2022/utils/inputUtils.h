@@ -32,13 +32,4 @@ bool getInputRange(char **menus, int menusLength, int min, int max, int *input)
 	} while ((*input) < min || (*input) > max);
 }
 
-bool getInputInt(char *message, bool (*validator)(int), int *input)
-{
-	do
-	{
-		printf("%s: ", message);
-		scanf("%d%*c", input);
-	} while (!validator(*input));
-}
-
 #endif
