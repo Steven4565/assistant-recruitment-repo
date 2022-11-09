@@ -13,6 +13,8 @@
     "utils.h": "c",
     "clientpage.h": "c",
     "mainpage.h": "c",
-    "table.h": "c"
+    "table.h": "c",
+    "stdlib.h": "c",
+    "fileutils.h": "c"
   }
 }
