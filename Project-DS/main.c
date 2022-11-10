@@ -8,8 +8,7 @@
 #include "menus/mainPage.h"
 
 #include "dataStructures/table.h"
-// #include "dataStructures/queue.h"
-// #include "dataStructures/stack.h"
+#include "dataStructures/hashmap.h"
 
 #include "globals.h"
 
@@ -23,12 +22,12 @@ void test()
 
 int main()
 {
-    // test();
+    test();
 
     init();
 
-    while (menuPage())
-        ;
+    // while (menuPage())
+    //     ;
 
     return 0;
 }

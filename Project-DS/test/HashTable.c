@@ -70,15 +70,20 @@ void pop(char *name)
         }
 
         if (cur->next == NULL)
-        {
             return;
-        }
 
         struct HashNode *toBeDeleted = cur->next;
-        cur->next = NULL;
-        free(toBeDeleted);
 
-        // move current node's next to deleted's next
+        if (cur->next->next != NULL)
+        {
+            cur->next = toBeDeleted->next;
+        }
+        else
+        {
+            cur->next = NULL;
+        }
+
+        free(toBeDeleted);
     }
 }
 
@@ -99,9 +104,11 @@ void printHashTable()
 int main()
 {
     push("hello", 10);
-    push("helllo", 100);
+    push("helol", 11);
+    push("hoell", 12);
+    push("ohell", 13);
     push("asdf", 100);
-    pop("hello");
+    // pop("hoell");
 
     printHashTable();
 
