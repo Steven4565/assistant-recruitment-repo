@@ -8,7 +8,7 @@
 #include "menus/mainPage.h"
 
 #include "dataStructures/table.h"
-#include "dataStructures/hashmap.h"
+#include "dataStructures/hashtable.h"
 
 #include "globals.h"
 
@@ -26,8 +26,8 @@ int main()
 
     init();
 
-    // while (menuPage())
-    //     ;
+    while (menuPage())
+        ;
 
     return 0;
 }

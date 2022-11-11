@@ -62,30 +62,6 @@ void delete ()
 bool menuPage()
 {
 	clrscr();
-	puts("BSGYM");
-	puts("===========");
-
-	char *menus[] = {"Insert membership", "View membership", "Delete membership", "Exit"};
-	int input;
-	getInputRange(menus, 4, 1, 4, false, &input);
-
-	if (input == 4)
-		return false;
-
-	switch (input)
-	{
-	case 1:
-		insert();
-		break;
-	case 2:
-		view();
-		break;
-	case 3:
-		delete ();
-		break;
-	default:
-		break;
-	}
 
 	return true;
 }

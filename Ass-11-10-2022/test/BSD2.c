@@ -131,7 +131,7 @@ struct node *deleteNode(struct node *root, int data)
             // ganti value root ke temp
             root->data = temp->data;
             // value dr kiri ke kanan blm abis
-            root->left - deleteNode(root->left, data);
+            root->left = deleteNode(root->left, data);
         }
     }
 }

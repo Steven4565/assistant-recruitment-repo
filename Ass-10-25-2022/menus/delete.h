@@ -30,7 +30,7 @@ void inputCodeToDelete(char *input)
 	} while (strlen(input) > 7);
 }
 
-void deleteEntry(int index)
+void deleteEntries(int index)
 {
 	moveEntriesForward(index);
 	dbLen--;
@@ -70,7 +70,7 @@ void deleteStock()
 	}
 
 	// delete entry
-	deleteEntry(codeIndex);
+	deleteEntries(codeIndex);
 
 	printf("successfully deleted %s\n", formattedCode);
 	puts("Press enter to continue...");

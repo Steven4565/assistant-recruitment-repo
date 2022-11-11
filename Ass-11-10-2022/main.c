@@ -11,6 +11,8 @@
 
 #include "dataStructures/table.h"
 #include "dataStructures/hashTable.h"
+#include "dataStructures/bst.h"
+#include "dataStructures/entry.h"
 
 #include "globals.h"
 
@@ -21,26 +23,33 @@ void init()
 
 void test()
 {
-    pushHashTable(hashTable, "steven", 18, 42, "male", "asdfasdf");
-    pushHashTable(hashTable, "melvion", 16, 4, "male", "asdf1");
-    pushHashTable(hashTable, "phi", 48, 23, "male", "asdf23");
-    pushHashTable(hashTable, "nathan", 19, 43, "male", "asdf3");
-    pushHashTable(hashTable, "dani", 11, 46, "male", "asdf4");
-    pushHashTable(hashTable, "shanie", 12, 87, "female", "asdf6");
+    char *keys[] = {"1111", "3333", "2222", "4444", "5555"};
+    struct Bst *bst = newBst();
 
-    popHashTable(hashTable, "asdf4");
-    printHashTable(hashTable);
-    getEnter();
+    for (int i = 0; i < 5; i++)
+    {
+        struct Row *row = newRow();
+        pushRowTail(row, newEntryInt(i));
+
+        insertBst(bst, keys[i], row);
+    }
+
+    struct Row *row = newRow();
+    pushRowTail(row, newEntryInt(1122));
+    insertBst(bst, "1122", row);
+
+    deleteBst(bst, "1122");
+    printBstInfix(bst->head);
 }
 
 int main()
 {
-    // test();
-
     init();
 
-    while (menuPage())
-        ;
+    test();
+
+    // while (menuPage())
+    //     ;
 
     return 0;
 }
