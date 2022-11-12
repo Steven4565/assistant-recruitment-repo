@@ -7,3 +7,4 @@ char *borrowPath = "database/borrows.txt";
 char *filmsPath = "database/films.txt";
 
 struct User currentUser;
+struct Row genres;

@@ -13,6 +13,8 @@
 #include "../utils/utils.h"
 #include "../utils/gameUtils.h"
 
+#include "./menuOptionsPage.h"
+
 #include "../globals.h"
 
 void login()
@@ -28,8 +30,14 @@ void login()
 	char inputBuffer;
 	while (true)
 	{
-		inputBuffer = getch();
+		clrscr();
+		printf("Password >> ");
+		for (int i = 0; i < strlen(passBuffer); i++)
+		{
+			printf("*");
+		}
 
+		inputBuffer = getch();
 		if (inputBuffer == '\r')
 			break;
 		else if (inputBuffer == '\b')
@@ -41,26 +49,22 @@ void login()
 			printf("%c", inputBuffer);
 			strncat(passBuffer, &inputBuffer, 1);
 		}
-		clrscr();
-		printf("Password >> ");
-		for (int i = 0; i < strlen(passBuffer); i++)
-		{
-			printf("*");
-		}
 	}
 
 	puts("");
-	if (strlen(passBuffer) > 0 && strcmp(passBuffer, "admin") && strcmp(username, "admin"))
+	if (strlen(passBuffer) > 0 && strcmp(passBuffer, "admin") == 0 && strcmp(username, "admin") == 0)
 	{
 		puts("Successfully logged in as admin");
-
+		while (menuOptionsPage())
+			;
 		getEnter();
 	}
 	else if (strlen(passBuffer) > 0 && strcmp(passBuffer, currentUser.pass) == 0)
 	{
 		puts("Successfully logged in");
-
 		getEnter();
+		while (menuOptionsPage())
+			;
 	}
 	else
 	{
@@ -81,7 +85,7 @@ void regist()
 	// TODO: writeRow, set user data
 }
 
-bool menuPage()
+bool mainPage()
 {
 	clrscr();
 	puts("filMZ");

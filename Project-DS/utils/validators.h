@@ -26,9 +26,29 @@ bool intValidator(char *input)
 	return true;
 }
 
+bool genreValidator(char *input)
+{
+	if (checkInRow(&genres, input))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool positiveValidator(int input)
+{
+	if (input < 0)
+	{
+		puts("Input must be a positve number");
+		return false;
+	}
+	return true;
+}
+
 bool nameValidator(char *name)
 {
-	if (strlen(name) >= 2)
+	if (strlen(name) >= 1)
 		return true;
 	else
 		return false;

@@ -19,6 +19,14 @@
 void init()
 {
     srand(time(NULL));
+    pushRowTail(&genres, newEntryStr("romance"));
+    pushRowTail(&genres, newEntryStr("drama"));
+    pushRowTail(&genres, newEntryStr("action"));
+    pushRowTail(&genres, newEntryStr("mecha"));
+    pushRowTail(&genres, newEntryStr("horror"));
+    pushRowTail(&genres, newEntryStr("fantasy"));
+    pushRowTail(&genres, newEntryStr("comedy"));
+    pushRowTail(&genres, newEntryStr("adventure"));
 }
 
 void test()
@@ -35,7 +43,7 @@ int main()
 
     init();
 
-    while (menuPage())
+    while (mainPage())
         ;
 
     return 0;

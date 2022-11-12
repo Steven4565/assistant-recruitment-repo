@@ -128,4 +128,18 @@ void printRow(struct Row *row)
 	puts("");
 }
 
+bool checkInRow(struct Row *row, char *query)
+{
+	struct Entry *cur = row->entryHead;
+	while (cur != NULL)
+	{
+		if (!cur->isInt && strcmp(query, cur->str) == 0)
+		{
+			return true;
+		}
+		cur = cur->next;
+	}
+	return false;
+}
+
 #endif
