@@ -5,6 +5,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <conio.h>
 #include "../utils/inputUtils.h"
 #include "../utils/outputUtils.h"
 #include "../utils/validators.h"
@@ -12,33 +13,72 @@
 #include "../utils/utils.h"
 #include "../utils/gameUtils.h"
 
-void insert()
-{
-	char name[100];
-	int age;
-	int weight;
-	char gender[10];
-	char code[50] = "";
-
-	getInputString("Input name (>=2 char)", nameValidator, name);
-	getInputInt("Input age (>= 10 yo)", ageValidator, &age);
-	getInputInt("Input weight (>= 30kg)", weightValidator, &weight);
-	getInputString("Input gender (male/female insensitive)", genderValidator, gender);
-
-	getCode(name, age, weight, gender, code);
-
-	printf("\nhash key: %d\n", getHash(code));
-
-	puts("Successfully inserted");
-	getEnter();
-}
+#include "../globals.h"
 
 void login()
 {
+	char username[50];
+	getInputString("Input username", usernameLoginValidator, username);
+
+	char row[150];
+	getUser(userPath, username, row);
+	parseUser(&currentUser, row);
+
+	char passBuffer[50] = "";
+	char inputBuffer;
+	while (true)
+	{
+		inputBuffer = getch();
+
+		if (inputBuffer == '\r')
+			break;
+		else if (inputBuffer == '\b')
+		{
+			passBuffer[strlen(passBuffer) - 1] = '\0';
+		}
+		else
+		{
+			printf("%c", inputBuffer);
+			strncat(passBuffer, &inputBuffer, 1);
+		}
+		clrscr();
+		printf("Password >> ");
+		for (int i = 0; i < strlen(passBuffer); i++)
+		{
+			printf("*");
+		}
+	}
+
+	puts("");
+	if (strlen(passBuffer) > 0 && strcmp(passBuffer, "admin") && strcmp(username, "admin"))
+	{
+		puts("Successfully logged in as admin");
+
+		getEnter();
+	}
+	else if (strlen(passBuffer) > 0 && strcmp(passBuffer, currentUser.pass) == 0)
+	{
+		puts("Successfully logged in");
+
+		getEnter();
+	}
+	else
+	{
+		puts("Incorrect Password");
+		getEnter();
+	}
 }
 
 void regist()
 {
+	char *username;
+	char *password;
+	getInputString("Input new username [8-30 char long]", usernameLoginValidator, username);
+	getInputString("Input new password", passwordRegisterValidator, password);
+
+	puts("Successfully registered");
+	getEnter();
+	// TODO: writeRow, set user data
 }
 
 bool menuPage()
@@ -48,9 +88,9 @@ bool menuPage()
 	puts("===========");
 
 	char *menus[] = {
-			"Exit",
-			"Login",
-			"Register",
+		"Exit",
+		"Login",
+		"Register",
 	};
 	int input;
 	getInputRange(menus, 3, 0, 2, true, &input);

@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <string.h>
+#include <stdlib.h>
+#include <time.h>
+#include <unistd.h>
+#include <malloc.h>
 #include "utils/utils.h"
 #include "utils/validators.h"
 #include "utils/inputUtils.h"
@@ -14,15 +18,20 @@
 
 void init()
 {
+    srand(time(NULL));
 }
 
 void test()
 {
+    char row[150];
+    getUser(userPath, "irkimuzak", row);
+    usernameLoginValidator(";asjfalkjsdf");
 }
 
 int main()
 {
-    test();
+
+    // test();
 
     init();
 

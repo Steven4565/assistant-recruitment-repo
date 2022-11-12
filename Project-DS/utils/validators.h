@@ -3,6 +3,9 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <ctype.h>
+#include "fileUtils.h"
+#include "../globals.h"
 
 bool validateMenu(char *input)
 {
@@ -31,28 +34,56 @@ bool nameValidator(char *name)
 		return false;
 }
 
-bool ageValidator(int age)
+bool usernameLoginValidator(char *name)
 {
-	if (age >= 10)
-		return true;
-	else
+	char row[150] = "";
+	getUser(userPath, name, row);
+	if (strlen(row) == 0)
+	{
+		puts("Username not found");
 		return false;
+	}
+	return true;
 }
 
-bool weightValidator(int weight)
+bool usernameRegisterValidator(char *name)
 {
-	if (weight >= 30)
-		return true;
-	else
+	int length = strlen(name);
+	if (length < 8 || length > 30)
+	{
+		puts("Username must be between 8 and 30 char long\n");
 		return false;
+	}
+
+	for (int i = 0; i < length; i++)
+	{
+		if (!isalpha(name[i]) && !name[i] != ' ' && !name[i] != '_' && !isdigit(name[i]))
+		{
+			puts("Name must be alphanumeric with spaces or underscores");
+			return false;
+		}
+	}
+
+	char row[150];
+	getUser(userPath, name, row);
+	if (strlen(row) != 0)
+	{
+		puts("Username already exists");
+		return false;
+	}
+
+	return true;
 }
 
-bool genderValidator(char *gender)
+bool passwordRegisterValidator(char *password)
 {
-	if (strcmpi(gender, "male") == 0 || strcmpi(gender, "female"))
-		return true;
-	else
+	int length = strlen(password);
+	if (length < 8 || length > 30)
+	{
+		puts("Password must be between 8 and 30 characters long");
 		return false;
+	}
+	return true;
 }
 
 #endif

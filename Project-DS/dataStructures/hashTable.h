@@ -7,7 +7,6 @@
 #include <stdlib.h>
 #include "../utils/gameUtils.h"
 #include "../globals.h"
-#include "../globals.c"
 
 #define SIZE 9999
 

@@ -3,12 +3,4 @@
 
 #include "globals.c"
 
-struct User
-{
-    char *name;
-    int password;
-    int money;
-    char *favoritedFilms;
-};
-
 #endif
