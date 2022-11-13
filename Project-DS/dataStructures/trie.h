@@ -10,14 +10,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-struct FilmData
-{
-	char name[50];
-	char desc[50];
-	int price;
-	int duration;
-	int genres[150];
-};
+#include "../utils/gameUtils.h"
 
 struct TrieNode
 {
@@ -63,7 +56,7 @@ struct TrieNode *newTrieNode()
 	return created;
 }
 
-void insertTrie(struct TrieNode *root, char *key)
+void insertTrie(struct TrieNode *root, char *key, struct FilmData *data)
 {
 	struct TrieNode *cur = root;
 	int length = strlen(key);
@@ -77,6 +70,7 @@ void insertTrie(struct TrieNode *root, char *key)
 		cur = cur->children[index];
 	}
 	cur->isEndOfWord = true;
+	cur->film = data;
 }
 
 bool searchTrie(struct TrieNode *root, char *key)
@@ -132,6 +126,7 @@ struct TrieNode *deleteTrieRoot(struct TrieNode *root, char *key, int depth)
 
 	if (trieNodeEmpty(root) && !root->isEndOfWord)
 	{
+		free(root->film);
 		free(root);
 		root = NULL;
 	}
@@ -181,6 +176,79 @@ void printTrie(struct TrieNode *root, char *key, int maxPrints)
 		char buffer[50];
 		printTrieRoot(cur, key, buffer, 0, &maxPrints);
 	}
+}
+
+void queryTrieKeysRecursive(struct TrieNode *root, char *buffer, char *query, int level, char namesOutput[4][50], int *outputCount)
+{
+	if (root->isEndOfWord && *outputCount < 4)
+	{
+		buffer[level] = '\0';
+		strcpy(namesOutput[*outputCount], query);
+		strcat(namesOutput[*outputCount], buffer);
+		*outputCount += 1;
+	}
+
+	for (int i = 0; i < CHILDREN_SIZE; i++)
+	{
+		if (root->children[i] != NULL && *outputCount < 4)
+		{
+			buffer[level] = mapToChar(i);
+			queryTrieKeysRecursive(root->children[i], buffer, query, level + 1, namesOutput, outputCount);
+		}
+	}
+}
+
+/// @brief For querying a list of names which matches the query
+/// @param root
+/// @param query
+/// @param namesOutput of length 4
+/// @param outputLength pointer to amount of names returned
+void queryTrieKeys(struct TrieNode *root, char *query, char namesOutput[4][50], int *outputLength)
+{
+	int length = strlen(query);
+	struct TrieNode *cur = root;
+	for (int i = 0; i < length && cur != NULL; i++)
+	{
+		int index = mapToIndex(query[i]);
+		cur = cur->children[index];
+	}
+	strcpy(namesOutput[2], query);
+
+	if (trieNodeEmpty(cur))
+	{
+		puts("No films found");
+	}
+	else
+	{
+		char buffer[50];
+		queryTrieKeysRecursive(cur, buffer, query, 0, namesOutput, outputLength);
+	}
+}
+
+/// @brief Querying a single entry from the trie
+/// @param root root node for trie
+/// @param key entry name to be queried
+/// @param output film data pointer for output, returns NULL if not found any
+struct FilmData *queryTrieData(struct TrieNode *root, char *key, struct FilmData *output)
+{
+	struct TrieNode *cur = root;
+	int length = strlen(key);
+	for (int level = 0; level < length; level++)
+	{
+		int index = mapToIndex(key[level]);
+		if (cur->children[index] == NULL)
+		{
+			return NULL;
+		}
+		cur = cur->children[index];
+	}
+
+	if (cur->isEndOfWord == true)
+	{
+		return cur->film;
+	}
+
+	return NULL;
 }
 
 #endif

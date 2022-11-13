@@ -17,6 +17,29 @@
 
 #include "../globals.h"
 
+bool chooseFilmPage(char names[4][50], int namesSize)
+{
+    clrscr();
+    char *options[5] = {"Return"};
+    for (int i = 0; i < namesSize; i++)
+    {
+        options[i + 1] = names[i];
+    }
+
+    int inputBuffer;
+    getInputRange(options, namesSize + 1, 0, namesSize, true, &inputBuffer);
+    if (inputBuffer == 0)
+    {
+        return false;
+    }
+
+    puts(options[inputBuffer]);
+    getEnter();
+    // TODO: go to film details, pass in the name as the parameter
+
+    return true;
+}
+
 bool searchFilmPage()
 {
     char inputBuffer;
@@ -27,7 +50,13 @@ bool searchFilmPage()
         printf("Search >> ");
         printf("%s\n", queryBuffer);
         printf("Results:\n");
-        printTrie(filmsList, queryBuffer, 4);
+        int namesSize = 0;
+        char names[4][50];
+        queryTrieKeys(filmsList, queryBuffer, names, &namesSize);
+        for (int i = 0; i < namesSize; i++)
+        {
+            printf("%d. %s\n", i + 1, names[i]);
+        }
 
         inputBuffer = getch();
         if (inputBuffer == '0')
@@ -36,7 +65,8 @@ bool searchFilmPage()
         }
         else if (inputBuffer == '\r')
         {
-            // TODO: handle results here
+            while (chooseFilmPage(names, namesSize))
+                ;
             break;
         }
         else if (inputBuffer == '\b')

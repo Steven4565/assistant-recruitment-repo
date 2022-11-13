@@ -28,7 +28,16 @@ void init()
 
 void test()
 {
-    printTrie(filmsList, "b", 4);
+    int namesLength = 0;
+    char names[4][50];
+    queryTrieKeys(filmsList, "violet", names, &namesLength);
+    for (int i = 0; i < namesLength; i++)
+    {
+        puts(names[i]);
+    }
+
+    struct FilmData *data = queryTrieData(filmsList, names[1], data);
+    chooseFilmPage(names, namesLength);
     getEnter();
 }
 

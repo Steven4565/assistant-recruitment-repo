@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <malloc.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -16,6 +17,26 @@ struct User
 	int money;
 	char favFilms[150];
 };
+
+struct FilmData
+{
+	char name[50];
+	char desc[50];
+	int price;
+	int duration;
+	char genres[150];
+};
+
+struct FilmData *newFilmData(char *name, char *desc, int price, int duration, char *genres)
+{
+	struct FilmData *created = (struct FilmData *)malloc(sizeof(struct FilmData));
+	strcpy(created->name, name);
+	strcpy(created->desc, desc);
+	strcpy(created->genres, genres);
+	created->price = price;
+	created->duration = duration;
+	return created;
+}
 
 int getHash(char *code)
 {

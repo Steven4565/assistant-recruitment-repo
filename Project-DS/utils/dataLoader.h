@@ -29,8 +29,7 @@ void loadFilms()
 		int duration;
 		char genres[150];
 		sscanf(rowBuffer, "%[^#]#%[^#]#%d#%d#%[^\n]\n", name, desc, &price, &duration, genres);
-		insertTrie(filmsList, name);
-		pushHashTable(filmsDatabase, name, desc, price, duration, genres);
+		insertTrie(filmsList, name, newFilmData(name, desc, price, duration, genres));
 	}
 
 	fclose(handle);

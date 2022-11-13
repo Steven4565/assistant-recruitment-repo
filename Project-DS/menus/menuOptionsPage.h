@@ -35,8 +35,8 @@ void uploadFilm()
 
     char row[300];
     sprintf(row, "%s#%s#%d#%d#%s#%s\n", name, desc, price, duration, genres, currentUser.name);
-    insertTrie(filmsList, name);
-    pushHashTable(filmsDatabase, name, desc, price, duration, genres);
+
+    insertTrie(filmsList, name, newFilmData(name, desc, price, duration, genres));
     writeRow(filmsPath, row);
 }
 
