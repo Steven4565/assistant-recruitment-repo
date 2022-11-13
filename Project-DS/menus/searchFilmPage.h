@@ -13,19 +13,22 @@
 #include "../utils/utils.h"
 #include "../utils/gameUtils.h"
 
+#include "../dataStructures/trie.h"
+
 #include "../globals.h"
 
 bool searchFilmPage()
 {
     char inputBuffer;
-    char queryBuffer[50];
+    char queryBuffer[50] = "";
     while (true)
     {
         clrscr();
         printf("Search >> ");
         printf("%s\n", queryBuffer);
         printf("Results:\n");
-        // TODO: print result here
+        printTrie(filmsList, queryBuffer, 4);
+
         inputBuffer = getch();
         if (inputBuffer == '0')
         {

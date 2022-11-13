@@ -5,47 +5,40 @@
 #include <stdio.h>
 #include <string.h>
 
-void writeRow(char *path, char delim, char *entry)
+void writeRow(char *path, char *entry)
 {
 	FILE *handle = fopen(path, "a");
-
+	fprintf(handle, entry);
 	fclose(handle);
 }
 
-void writeRows(char *path)
-{
-	FILE *handle = fopen(path, "a");
+// void rewriteFile()
+// {
+// 	FILE *handle = fopen("./database/player.dat", "w");
 
-	fclose(handle);
-}
+// 	fclose(handle);
+// }
 
-void rewriteFile()
-{
-	FILE *handle = fopen("./database/player.dat", "w");
+// void getRow()
+// {
+// 	FILE *handle = fopen("./database/player.dat", "r");
 
-	fclose(handle);
-}
+// 	fclose(handle);
+// }
 
-void getRow()
-{
-	FILE *handle = fopen("./database/player.dat", "r");
+// void getRows()
+// {
+// 	FILE *handle = fopen("./database/player.dat", "r");
 
-	fclose(handle);
-}
+// 	fclose(handle);
+// }
 
-void getRows()
-{
-	FILE *handle = fopen("./database/player.dat", "r");
+// void getEntries()
+// {
+// 	FILE *handle = fopen("./database/player.dat", "r");
 
-	fclose(handle);
-}
-
-void getEntries()
-{
-	FILE *handle = fopen("./database/player.dat", "r");
-
-	fclose(handle);
-}
+// 	fclose(handle);
+// }
 
 void getUser(char *path, char *username, char *row)
 {

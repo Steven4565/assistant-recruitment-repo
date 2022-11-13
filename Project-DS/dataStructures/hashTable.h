@@ -1,5 +1,5 @@
-#ifndef HASHMAP_H
-#define HASHMAP_H
+#ifndef HASH_TABLE_H
+#define HASH_TABLE_H
 
 #include <stdio.h>
 #include <malloc.h>
@@ -8,36 +8,36 @@
 #include "../utils/gameUtils.h"
 #include "../globals.h"
 
-#define SIZE 9999
+#define HASH_TABLE_SIZE 9999
 
 struct HashEntry
 {
 	char name[100];
-	int age;
-	int weight;
-	char gender[10];
-	char code[30];
+	char desc[200];
+	int price;
+	int duration;
+	char genres[150];
 	struct HashEntry *next;
 };
 
-struct HashEntry *newHashNode(char *name, int age, int weight, char *gender, char *code)
+struct HashEntry *newHashNode(char *name, char *desc, int price, int duration, char *genres)
 {
 	struct HashEntry *created = (struct HashEntry *)malloc(sizeof(struct HashEntry));
 	strcpy(created->name, name);
-	strcpy(created->code, code);
-	strcpy(created->gender, gender);
-	created->age = age;
-	created->weight = weight;
+	strcpy(created->desc, desc);
+	strcpy(created->genres, genres);
+	created->price = price;
+	created->duration = duration;
 	created->next = NULL;
 	return created;
 }
 
-void pushHashTable(struct HashEntry **table, char *name, int age, int weight, char *gender, char *code)
+void pushHashTable(struct HashEntry **table, char *name, char *desc, int price, int duration, char *genres)
 {
-	int key = getHash(code);
+	int key = getHash(name);
 	if (table[key] == NULL)
 	{
-		table[key] = newHashNode(name, age, weight, gender, code);
+		table[key] = newHashNode(name, desc, price, duration, genres);
 		return;
 	}
 
@@ -51,21 +51,21 @@ void pushHashTable(struct HashEntry **table, char *name, int age, int weight, ch
 		cur = cur->next;
 	}
 
-	struct HashEntry *created = newHashNode(name, age, weight, gender, code);
+	struct HashEntry *created = newHashNode(name, desc, price, duration, genres);
 	struct HashEntry *prev = cur;
 	prev->next = created;
 	cur = created;
 }
 
-void popHashTable(struct HashEntry **table, char *code)
+void popHashTable(struct HashEntry **table, char *name)
 {
-	int key = getHash(code);
+	int key = getHash(name);
 	if (table[key] == NULL)
 	{
 		return;
 	}
 
-	if (strcmp(table[key]->code, code) == 0)
+	if (strcmp(table[key]->name, name) == 0)
 	{
 		struct HashEntry *temp = table[key];
 		table[key] = table[key]->next;
@@ -75,7 +75,7 @@ void popHashTable(struct HashEntry **table, char *code)
 	else
 	{
 		struct HashEntry *cur = table[key];
-		while (cur->next != NULL && strcmp(cur->next->code, code) != 0)
+		while (cur->next != NULL && strcmp(cur->next->name, name) != 0)
 		{
 			cur = cur->next;
 		}
@@ -100,12 +100,12 @@ void popHashTable(struct HashEntry **table, char *code)
 
 void printHashTable(struct HashEntry **table)
 {
-	for (int i = 0; i < SIZE; i++)
+	for (int i = 0; i < HASH_TABLE_SIZE; i++)
 	{
 		struct HashEntry *cur = table[i];
 		while (cur != NULL)
 		{
-			printf("| %-25s | %-5d | %-7d | %-10s | %-15s |\n", cur->name, cur->age, cur->weight, cur->gender, cur->code);
+			printf("| %-25s | %-25s | %-5d | %-7d | %-20s |\n", cur->name, cur->desc, cur->price, cur->duration, cur->genres); // TODO:
 			cur = cur->next;
 		}
 	}

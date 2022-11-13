@@ -33,7 +33,11 @@ void uploadFilm()
     getInputInt("Input film duration", positiveValidator, &duration);
     getInputString("Input genres (separated by commas only)", genreValidator, genres);
 
-    // TODO: push to trie, update file
+    char row[300];
+    sprintf(row, "%s#%s#%d#%d#%s#%s\n", name, desc, price, duration, genres, currentUser.name);
+    insertTrie(filmsList, name);
+    pushHashTable(filmsDatabase, name, desc, price, duration, genres);
+    writeRow(filmsPath, row);
 }
 
 void returnFilm()
@@ -54,7 +58,7 @@ bool menuOptionsPage()
         "Return Film",
         "Favorited Film"};
     int input;
-    getInputRange(menus, 4, 0, 4, true, &input);
+    getInputRange(menus, 5, 0, 4, true, &input);
 
     // Exit Program
     if (input == 0)

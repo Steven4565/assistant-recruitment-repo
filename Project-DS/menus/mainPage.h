@@ -75,14 +75,23 @@ void login()
 
 void regist()
 {
-	char *username;
-	char *password;
-	getInputString("Input new username [8-30 char long]", usernameLoginValidator, username);
+	char username[30];
+	char password[30];
+	getInputString("Input new username [8-30 char long]", usernameRegisterValidator, username);
 	getInputString("Input new password", passwordRegisterValidator, password);
 
-	puts("Successfully registered");
+	char row[60];
+	sprintf(row, "%s#%s#300#-\n", username, password);
+	writeRow(userPath, row);
+	strcpy(currentUser.name, username);
+	strcpy(currentUser.pass, password);
+	strcpy(currentUser.favFilms, "-");
+	currentUser.money = 300;
+
+		puts("Successfully registered");
 	getEnter();
-	// TODO: writeRow, set user data
+	while (menuOptionsPage())
+		;
 }
 
 bool mainPage()
@@ -92,9 +101,9 @@ bool mainPage()
 	puts("===========");
 
 	char *menus[] = {
-		"Exit",
-		"Login",
-		"Register",
+			"Exit",
+			"Login",
+			"Register",
 	};
 	int input;
 	getInputRange(menus, 3, 0, 2, true, &input);

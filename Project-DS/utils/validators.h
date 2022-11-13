@@ -28,12 +28,22 @@ bool intValidator(char *input)
 
 bool genreValidator(char *input)
 {
-	if (checkInRow(&genres, input))
+	char genresInput[150];
+	strcpy(genresInput, input);
+	char delim[2] = ",";
+	char *token;
+	token = strtok(genresInput, delim);
+
+	while (token != NULL)
 	{
-		return true;
+		if (!checkInRow(&genres, token))
+		{
+			return false;
+		}
+		token = strtok(NULL, delim);
 	}
 
-	return false;
+	return true;
 }
 
 bool positiveValidator(int input)

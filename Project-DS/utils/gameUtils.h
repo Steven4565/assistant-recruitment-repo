@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include "utils.h"
+#include "../dataStructures/hashTable.h"
 
 struct User
 {
@@ -18,14 +19,14 @@ struct User
 
 int getHash(char *code)
 {
+	unsigned long long hash = 5381;
 	int size = strlen(code);
-	int sum = 0;
-	for (int i = 0; i < size; i++)
+	int c;
+	while (c = *code++)
 	{
-		sum += code[i];
-		sum %= 9999;
+		hash = ((hash << 5) + hash) + c;
 	}
-	return sum;
+	return hash % 9999;
 }
 
 void parseUser(struct User *user, char *row)

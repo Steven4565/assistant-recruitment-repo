@@ -5,9 +5,11 @@
 #include <time.h>
 #include <unistd.h>
 #include <malloc.h>
+
 #include "utils/utils.h"
 #include "utils/validators.h"
 #include "utils/inputUtils.h"
+#include "utils/dataLoader.h"
 
 #include "menus/mainPage.h"
 
@@ -19,29 +21,23 @@
 void init()
 {
     srand(time(NULL));
-    pushRowTail(&genres, newEntryStr("romance"));
-    pushRowTail(&genres, newEntryStr("drama"));
-    pushRowTail(&genres, newEntryStr("action"));
-    pushRowTail(&genres, newEntryStr("mecha"));
-    pushRowTail(&genres, newEntryStr("horror"));
-    pushRowTail(&genres, newEntryStr("fantasy"));
-    pushRowTail(&genres, newEntryStr("comedy"));
-    pushRowTail(&genres, newEntryStr("adventure"));
+    filmsList = newTrieNode();
+    loadGenresLL();
+    loadFilms();
 }
 
 void test()
 {
-    char row[150];
-    getUser(userPath, "irkimuzak", row);
-    usernameLoginValidator(";asjfalkjsdf");
+    printTrie(filmsList, "b", 4);
+    getEnter();
 }
 
 int main()
 {
 
-    // test();
-
     init();
+
+    // test();
 
     while (mainPage())
         ;

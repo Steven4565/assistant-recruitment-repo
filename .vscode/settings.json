@@ -17,6 +17,11 @@
     "stdlib.h": "c",
     "fileutils.h": "c",
     "bst.h": "c",
-    "hashtable.h": "c"
+    "hashtable.h": "c",
+    "string.h": "c",
+    "gameutils.h": "c",
+    "entry.h": "c",
+    "trie.h": "c",
+    "stdbool.h": "c"
   }
 }
