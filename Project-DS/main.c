@@ -24,9 +24,10 @@ void init()
     filmsList = newTrieNode();
     loadGenresLL();
     loadFilms();
+    loadFavorites();
 }
 
-void test()
+void testTrie()
 {
     int namesLength = 0;
     char names[4][50];
@@ -36,8 +37,27 @@ void test()
         puts(names[i]);
     }
 
-    struct FilmData *data = queryTrieData(filmsList, names[1], data);
+    struct FilmData *data = queryTrieData(filmsList, names[1]);
     chooseFilmPage(names, namesLength);
+    getEnter();
+}
+
+void testHashTable()
+{
+    pushHashTable(userFavoritesTable, "steven", "angel beats");
+    pushHashTable(userFavoritesTable, "steveasdfn", "angel beats, asdfadsf");
+    pushHashTable(userFavoritesTable, "nevets", "angel beats, asdf");
+    printHashTable(userFavoritesTable);
+}
+
+void testFavPage()
+{
+    char *testRow = "test1,test2,test3,test54";
+    strcpy(currentUser.favFilms, testRow);
+
+    printf("count :%d", getFilmsCount(currentUser.favFilms));
+    while (favoriteFilmPage())
+        ;
     getEnter();
 }
 
@@ -46,7 +66,9 @@ int main()
 
     init();
 
-    // test();
+    // testTrie();
+    // testHashTable();
+    // testFavPage();
 
     while (mainPage())
         ;

@@ -8,36 +8,30 @@
 #include "../utils/gameUtils.h"
 #include "../globals.h"
 
-#define HASH_TABLE_SIZE 9999
+#define HASH_TABLE_SIZE 99
 
 struct HashEntry
 {
-	char name[100];
-	char desc[200];
-	int price;
-	int duration;
-	char genres[150];
+	char name[50];
+	char favFilms[200];
 	struct HashEntry *next;
 };
 
-struct HashEntry *newHashNode(char *name, char *desc, int price, int duration, char *genres)
+struct HashEntry *newHashNode(char *name, char *favFilms)
 {
 	struct HashEntry *created = (struct HashEntry *)malloc(sizeof(struct HashEntry));
 	strcpy(created->name, name);
-	strcpy(created->desc, desc);
-	strcpy(created->genres, genres);
-	created->price = price;
-	created->duration = duration;
+	strcpy(created->favFilms, favFilms);
 	created->next = NULL;
 	return created;
 }
 
-void pushHashTable(struct HashEntry **table, char *name, char *desc, int price, int duration, char *genres)
+void pushHashTable(struct HashEntry **table, char *name, char *favFilms)
 {
 	int key = getHash(name);
 	if (table[key] == NULL)
 	{
-		table[key] = newHashNode(name, desc, price, duration, genres);
+		table[key] = newHashNode(name, favFilms);
 		return;
 	}
 
@@ -51,7 +45,7 @@ void pushHashTable(struct HashEntry **table, char *name, char *desc, int price, 
 		cur = cur->next;
 	}
 
-	struct HashEntry *created = newHashNode(name, desc, price, duration, genres);
+	struct HashEntry *created = newHashNode(name, favFilms);
 	struct HashEntry *prev = cur;
 	prev->next = created;
 	cur = created;
@@ -105,7 +99,7 @@ void printHashTable(struct HashEntry **table)
 		struct HashEntry *cur = table[i];
 		while (cur != NULL)
 		{
-			printf("| %-25s | %-25s | %-5d | %-7d | %-20s |\n", cur->name, cur->desc, cur->price, cur->duration, cur->genres); // TODO:
+			printf("| %-35s | %-25s |\n", cur->name, cur->favFilms);
 			cur = cur->next;
 		}
 	}

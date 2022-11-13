@@ -14,9 +14,28 @@
 
 #include "../globals.h"
 
+void loadFavorites()
+{
+	FILE *handle = fopen("./database/users.txt", "r");
+
+	char rowBuffer[150];
+	while (fgets(rowBuffer, 150, handle) != NULL)
+	{
+		if (strlen(rowBuffer) <= 0)
+			continue;
+
+		char user[50];
+		char favFilms[200];
+		sscanf(rowBuffer, "%[^#]#%*[^#]#%*d#%[^\n]\n", user, favFilms);
+		pushHashTable(userFavoritesTable, user, favFilms);
+	}
+
+	fclose(handle);
+}
+
 void loadFilms()
 {
-	FILE *handle = fopen("./database/films.txt", "r");
+	FILE *handle = fopen(filmsPath, "r");
 
 	char rowBuffer[150];
 	while (fgets(rowBuffer, 150, handle) != NULL)

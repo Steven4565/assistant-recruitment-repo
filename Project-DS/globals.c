@@ -11,4 +11,4 @@ char *filmsPath = "database/films.txt";
 struct User currentUser;
 struct Row genres;
 struct TrieNode *filmsList;
-struct HashEntry *favoritedFilms[HASH_TABLE_SIZE];
+struct HashEntry *userFavoritesTable[HASH_TABLE_SIZE];

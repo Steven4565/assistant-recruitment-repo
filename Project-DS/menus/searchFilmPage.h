@@ -15,6 +15,8 @@
 
 #include "../dataStructures/trie.h"
 
+#include "filmDetailPage.h"
+
 #include "../globals.h"
 
 bool chooseFilmPage(char names[4][50], int namesSize)
@@ -33,9 +35,8 @@ bool chooseFilmPage(char names[4][50], int namesSize)
         return false;
     }
 
-    puts(options[inputBuffer]);
-    getEnter();
-    // TODO: go to film details, pass in the name as the parameter
+    while (filmDetailsPage(options[inputBuffer]))
+        ;
 
     return true;
 }

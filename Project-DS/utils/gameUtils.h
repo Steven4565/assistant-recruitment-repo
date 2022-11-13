@@ -47,7 +47,7 @@ int getHash(char *code)
 	{
 		hash = ((hash << 5) + hash) + c;
 	}
-	return hash % 9999;
+	return hash % 99;
 }
 
 void parseUser(struct User *user, char *row)

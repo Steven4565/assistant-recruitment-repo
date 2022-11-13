@@ -229,7 +229,7 @@ void queryTrieKeys(struct TrieNode *root, char *query, char namesOutput[4][50], 
 /// @param root root node for trie
 /// @param key entry name to be queried
 /// @param output film data pointer for output, returns NULL if not found any
-struct FilmData *queryTrieData(struct TrieNode *root, char *key, struct FilmData *output)
+struct FilmData *queryTrieData(struct TrieNode *root, char *key)
 {
 	struct TrieNode *cur = root;
 	int length = strlen(key);

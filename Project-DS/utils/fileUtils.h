@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "../globals.h"
+
 void writeRow(char *path, char *entry)
 {
 	FILE *handle = fopen(path, "a");
@@ -12,37 +14,9 @@ void writeRow(char *path, char *entry)
 	fclose(handle);
 }
 
-// void rewriteFile()
-// {
-// 	FILE *handle = fopen("./database/player.dat", "w");
-
-// 	fclose(handle);
-// }
-
-// void getRow()
-// {
-// 	FILE *handle = fopen("./database/player.dat", "r");
-
-// 	fclose(handle);
-// }
-
-// void getRows()
-// {
-// 	FILE *handle = fopen("./database/player.dat", "r");
-
-// 	fclose(handle);
-// }
-
-// void getEntries()
-// {
-// 	FILE *handle = fopen("./database/player.dat", "r");
-
-// 	fclose(handle);
-// }
-
 void getUser(char *path, char *username, char *row)
 {
-	FILE *handle = fopen("./database/users.txt", "r");
+	FILE *handle = fopen(userPath, "r");
 
 	if (handle == NULL)
 	{

@@ -88,7 +88,9 @@ void regist()
 	strcpy(currentUser.favFilms, "-");
 	currentUser.money = 300;
 
-		puts("Successfully registered");
+	pushHashTable(userFavoritesTable, username, "-");
+
+	puts("Successfully registered");
 	getEnter();
 	while (menuOptionsPage())
 		;

@@ -4,29 +4,29 @@
 #include <stdlib.h>
 #include "../utils/gameUtils.h"
 
-#define SIZE 999
+#define SIZE 99
 
 struct HashNode
 {
     char name[100];
-    int score;
+    char favFilms[200];
     struct HashNode *next;
 } * table[SIZE];
 
-struct HashNode *newHashNode(char *name, int score)
+struct HashNode *newHashNode(char *name, char *favFilms)
 {
     struct HashNode *created = (struct HashNode *)malloc(sizeof(struct HashNode));
     strcpy(created->name, name);
-    created->score = score;
+    strcpy(created->favFilms, favFilms);
     created->next = NULL;
 }
 
-void push(char *name, int score)
+void push(char *name, char *favFilms)
 {
     int key = getHash(name);
     if (table[key] == NULL)
     {
-        table[key] = newHashNode(name, score);
+        table[key] = newHashNode(name, favFilms);
         return;
     }
 
@@ -40,7 +40,7 @@ void push(char *name, int score)
         cur = cur->next;
     }
 
-    struct HashNode *created = newHashNode(name, score);
+    struct HashNode *created = newHashNode(name, favFilms);
     struct HashNode *prev = cur;
     prev->next = created;
     cur = created;
@@ -95,7 +95,7 @@ void printHashTable()
         while (cur != NULL)
         {
             printf("i: %d  |  ", i);
-            printf("name: %s  |  value: %d\n", cur->name, cur->score);
+            printf("name: %25s  |  value: %25s\n", cur->name, cur->favFilms);
             cur = cur->next;
         }
     }
