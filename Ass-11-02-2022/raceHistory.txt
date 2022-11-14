@@ -1,0 +1,4 @@
+Draw, Your last position was 38, Winner: Player, Bot 2
+Lost, Your last position was 29, Winner: Bot 1
+Won, Your last position was 40, Winner: Player
+Lost, Your last position was 38, Winner: Bot 2
